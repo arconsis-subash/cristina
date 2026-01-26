@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DO U LOVE ME, MY BABE 💖</title>
+  <style>
+    :root{
+      --glass: rgba(255,255,255,.10);
+      --glass2: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.14);
+      --stroke2: rgba(255,255,255,.18);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.75);
+      --shadow: 0 30px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.12);
+      --grad: linear-gradient(90deg, #ff4da6, #7c3aed, #3b82f6);
+      --yes: linear-gradient(135deg, #ff4da6, #7c3aed);
+      --maybe: linear-gradient(135deg, #3b82f6, #10b981);
+      --no: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color: var(--text);
+      overflow:hidden;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(255, 77, 166, 0.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(124, 58, 237, 0.35), transparent 60%),
+        radial-gradient(900px 600px at 60% 90%, rgba(59, 130, 246, 0.28), transparent 60%),
+        linear-gradient(135deg, rgba(10,10,20,1), rgba(18,10,30,1));
+    }
+
+    /* layers */
+    .layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    /* center stage */
+    .wrap{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:18px;
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      width:min(900px, 92vw);
+      border-radius:28px;
+      padding:34px 28px 24px;
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      position:relative;
+    }
+
+    .badges{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      color:rgba(255,255,255,.82);
+      font-size:12px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+      user-select:none;
+    }
+
+    h1{
+      margin:6px 0 8px;
+      letter-spacing:.5px;
+      line-height:1.02;
+      font-size:clamp(36px, 5.2vw, 64px);
+      text-shadow: 0 20px 80px rgba(0,0,0,.55);
+    }
+    .babe{
+      background: var(--grad);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:900;
+    }
+    .cursor{
+      opacity:.9;
+      animation: blink .9s steps(2,end) infinite;
+    }
+    @keyframes blink{ 50%{opacity:0} }
+
+    .sub{
+      margin:0 0 18px;
+      font-size:clamp(14px, 2.2vw, 18px);
+      color:var(--muted);
+    }
+    .tagline{
+      display:inline-block;
+      margin-left:8px;
+      padding:3px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      transform: translateY(-1px);
+    }
+
+    .emojiRow{
+      display:flex;
+      gap:12px;
+      font-size:24px;
+      margin-bottom:18px;
+      user-select:none;
+      opacity:.95;
+    }
+    .emojiRow span{ display:inline-block; }
+    @keyframes bob1 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
+    @keyframes bob2 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-14px);} }
+    @keyframes bob3 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
+    @keyframes bob4 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-16px);} }
+    @keyframes bob5 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-12px);} }
+    .w1{ animation: bob1 1.6s ease-in-out infinite; }
+    .w2{ animation: bob2 1.9s ease-in-out infinite; }
+    .w3{ animation: bob3 1.5s ease-in-out infinite; }
+    .w4{ animation: bob4 2.1s ease-in-out infinite; }
+    .w5{ animation: bob5 1.8s ease-in-out infinite; }
+
+    .btnRow{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      padding:12px 0 8px;
+      position:relative;
+      min-height:92px;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding:14px 18px;
+      border-radius:18px;
+      font-weight:900;
+      letter-spacing:.4px;
+      font-size:16px;
+      color:rgba(255,255,255,.95);
+      transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      user-select:none;
+      position:relative;
+      will-change: transform;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .yes{ background: var(--yes); }
+    .yes:hover{ filter: brightness(1.08); transform: translateY(-1px) scale(1.03); }
+    .maybe{ background: var(--maybe); opacity:.95; }
+    .maybe:hover{ filter: brightness(1.06); transform: translateY(-1px) scale(1.02); }
+    .no{
+      background: var(--no);
+      border:1px solid var(--stroke2);
+      color:rgba(255,255,255,.85);
+    }
+    .no:hover{ filter: brightness(1.1); }
+
+    .footer{
+      margin-top:18px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .mini{
+      min-width:min(420px, 92vw);
+      max-width:520px;
+      border-radius:18px;
+      padding:14px 14px 12px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+    }
+    .miniTitle{
+      color: rgba(255,255,255,.86);
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .meterWrap{
+      height:12px;
+      border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    .meterFill{
+      height:100%;
+      border-radius:999px;
+      background: var(--grad);
+      box-shadow: 0 10px 35px rgba(255,77,166,.25);
+      width:45%;
+      transition: width 500ms cubic-bezier(.2,.9,.2,1);
+    }
+    .miniHint{
+      margin-top:10px;
+      color: rgba(255,255,255,.72);
+      font-size:12px;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+    }
+
+    .linkBtn{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.85);
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .12s ease, filter .2s ease;
+    }
+    .linkBtn:hover{ filter: brightness(1.08); transform: translateY(-1px); }
+
+    /* glow pulse when YES */
+    .glowPulse{
+      animation: glow 1.2s ease-in-out 1;
+    }
+    @keyframes glow{
+      0%{ text-shadow: 0 20px 80px rgba(0,0,0,.55); }
+      50%{ text-shadow: 0 0 40px rgba(255,77,166,.55), 0 0 70px rgba(124,58,237,.35); }
+      100%{ text-shadow: 0 20px 80px rgba(0,0,0,.55); }
+    }
+
+    /* sparkle */
+    .sparkle{
+      position:absolute;
+      width:12px; height:12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,.1));
+      clip-path: polygon(50% 0%, 62% 22%, 86% 14%, 76% 38%, 100% 50%, 76% 62%, 86% 86%, 62% 78%, 50% 100%, 38% 78%, 14% 86%, 24% 62%, 0% 50%, 24% 38%, 14% 14%, 38% 22%);
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.18));
+      opacity:.85;
+      animation: twinkle 1.2s ease-in-out infinite;
+    }
+    @keyframes twinkle{
+      0%,100%{ transform: scale(.7) rotate(0deg); opacity:.55;}
+      50%{ transform: scale(1.15) rotate(35deg); opacity:.95;}
+    }
+
+    /* confetti */
+    .confetti{
+      position:absolute;
+      width:10px; height:10px;
+      border-radius:3px;
+      background: linear-gradient(135deg, #ff4da6, #7c3aed);
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.22));
+    }
+
+    /* heart particle */
+    .heart{
+      position:absolute;
+      width:18px; height:18px;
+      background: linear-gradient(135deg, #ff4da6, #7c3aed);
+      filter: drop-shadow(0 16px 45px rgba(0,0,0,.35));
+      clip-path: path("M12 21s-7-4.35-10-9.5C-0.5 6.5 2.5 2 7 2c2.1 0 3.7 1.1 5 2.6C13.3 3.1 14.9 2 17 2c4.5 0 7.5 4.5 5 9.5C19 16.65 12 21 12 21z");
+    }
+
+    /* tiny toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: rgba(255,255,255,.86);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+      font-weight: 800;
+      letter-spacing: .2px;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .toast.show{ opacity:1; transform: translateX(-50%) translateY(-6px); }
+  </style>
+</head>
+<body>
+
+  <div class="layer" id="sparkleLayer" aria-hidden="true"></div>
+  <div class="layer" id="confettiLayer" aria-hidden="true"></div>
+  <div class="layer" id="heartLayer" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="card" id="stage">
+      <div class="badges">
+        <span class="badge">superawesome romance engine</span>
+        <span class="badge" id="today"></span>
+      </div>
+
+      <h1 id="title">
+        DO U LOVE ME,<br>
+        <span class="babe">MY BABE</span><span class="cursor">▮</span>
+      </h1>
+
+      <p class="sub" id="sub">
+        Choose wisely. <span class="tagline" id="tagline">👀 be honest</span>
+      </p>
+
+      <div class="emojiRow" aria-hidden="true">
+        <span class="w1">💘</span>
+        <span class="w2">🫶</span>
+        <span class="w3">🌸</span>
+        <span class="w4">✨</span>
+        <span class="w5">🍓</span>
+      </div>
+
+      <div class="btnRow">
+        <button class="btn yes" id="yesBtn">YESSSSS 💖</button>
+        <button class="btn maybe" id="maybeBtn">maybe 👀</button>
+        <button class="btn no" id="noBtn" title="You sure about that?">no 🙃</button>
+      </div>
+
+      <div class="footer">
+        <div class="mini">
+          <div class="miniTitle">Love meter</div>
+          <div class="meterWrap"><div class="meterFill" id="meter"></div></div>
+          <div class="miniHint" id="hint">awaiting your answer…</div>
+        </div>
+
+        <button class="linkBtn" id="resetBtn">reset ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">💖 CONFIRMED 💖</div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const stage = $("stage");
+    const title = $("title");
+    const sub = $("sub");
+    const taglineEl = $("tagline");
+    const meter = $("meter");
+    const hint = $("hint");
+
+    const yesBtn = $("yesBtn");
+    const maybeBtn = $("maybeBtn");
+    const noBtn = $("noBtn");
+    const resetBtn = $("resetBtn");
+
+    const sparkleLayer = $("sparkleLayer");
+    const confettiLayer = $("confettiLayer");
+    const heartLayer = $("heartLayer");
+
+    const toast = $("toast");
+
+    $("today").textContent = new Date().toLocaleDateString();
+
+    const phrases = ["👀 be honest","🥺 pls","✨ say it louder","💘 i’m listening","🌸 i’ll bake cookies","🫶 pinky promise?","🪩 disco love?","🍓 sweet yes?"];
+    let phraseIdx = 0;
+    setInterval(() => {
+      phraseIdx = (phraseIdx + 1) % phrases.length;
+      taglineEl.textContent = phrases[phraseIdx];
+    }, 1400);
+
+    // Sparkles background
+    function spawnSparkle(){
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      const size = 6 + Math.random() * 14;
+      s.style.width = size + "px";
+      s.style.height = size + "px";
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.transform = `rotate(${Math.random()*360}deg)`;
+      sparkleLayer.appendChild(s);
+
+      const life = 900 + Math.random()*800;
+      setTimeout(() => s.remove(), life);
+    }
+    setInterval(spawnSparkle, 90);
+
+    // Confetti
+    function spawnConfetti(){
+      const count = 120;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      for(let i=0;i<count;i++){
+        const c = document.createElement("div");
+        c.className = "confetti";
+        const size = 6 + Math.random()*10;
+        c.style.width = size + "px";
+        c.style.height = size + "px";
+        c.style.left = (Math.random()*w) + "px";
+        c.style.top = (-20 - Math.random()*30) + "px";
+        c.style.borderRadius = (Math.random()<0.2 ? "10px" : "3px");
+        c.style.background = `linear-gradient(135deg,
+          hsl(${Math.random()*360} 95% 60%),
+          hsl(${Math.random()*360} 95% 60%))`;
+
+        confettiLayer.appendChild(c);
+
+        const vx = (Math.random()-0.5) * 2.2;
+        const vy = 2.2 + Math.random()*3.2;
+        const vr = (Math.random()-0.5) * 10;
+        let rot = Math.random()*360;
+
+        const life = 2200 + Math.random()*1200;
+        const born = performance.now();
+
+        function tick(t){
+          const dt = t - born;
+          const p = dt / life;
+          if(p >= 1){ c.remove(); return; }
+
+          const x = parseFloat(c.style.left) + vx;
+          const y = parseFloat(c.style.top) + vy;
+          rot += vr;
+
+          c.style.left = x + "px";
+          c.style.top = y + "px";
+          c.style.transform = `rotate(${rot}deg)`;
+          c.style.opacity = (p < 0.9) ? 1 : (1 - (p-0.9)*10);
+
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    }
+
+    // Hearts burst
+    function burstHearts(cx, cy){
+      const count = 26;
+      for(let i=0;i<count;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        const size = 10 + Math.random()*22;
+        h.style.width = size + "px";
+        h.style.height = size + "px";
+        h.style.left = (cx - size/2) + "px";
+        h.style.top = (cy - size/2) + "px";
+        h.style.transform = `rotate(${Math.random()*360}deg)`;
+        heartLayer.appendChild(h);
+
+        const vx = (Math.random()-0.5) * 4.0;
+        const vy = -(4.2 + Math.random()*5.0);
+        const vr = (Math.random()-0.5) * 12;
+        let rot = Math.random()*360;
+
+        const life = 1400 + Math.random()*900;
+        const born = performance.now();
+
+        function tick(t){
+          const dt = t - born;
+          const p = dt / life;
+          if(p >= 1){ h.remove(); return; }
+
+          const x = parseFloat(h.style.left) + vx;
+          const y = parseFloat(h.style.top) + vy + (p*p*2.4); // gravity-ish
+          rot += vr;
+
+          h.style.left = x + "px";
+          h.style.top = y + "px";
+          h.style.transform = `rotate(${rot}deg) scale(${1 - p*0.25})`;
+          h.style.opacity = (p < 0.85) ? 1 : (1 - (p-0.85)*7);
+
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    }
+
+    // Love meter helpers
+    function setMode(mode){
+      if(mode === "ask"){
+        meter.style.width = "45%";
+        hint.textContent = "awaiting your answer…";
+        sub.innerHTML = `Choose wisely. <span class="tagline" id="tagline">${phrases[phraseIdx]}</span>`;
+      }
+      if(mode === "no"){
+        meter.style.width = "22%";
+        hint.textContent = "hmm… suspicious 😼";
+        sub.innerHTML = `The <b>No</b> button is… shy 😳 <span class="tagline" id="tagline">try again</span>`;
+      }
+      if(mode === "maybe"){
+        meter.style.width = "68%";
+        hint.textContent = "we’re getting warmer 🔥";
+        sub.innerHTML = `“Maybe” is cute. But let’s upgrade it to a <b>YES</b> 💖`;
+      }
+      if(mode === "yes"){
+        meter.style.width = "100%";
+        hint.textContent = "MAXIMUM BABE ENERGY 💯";
+        sub.innerHTML = `I KNEW IT. <span class="tagline" id="tagline">you’re my favorite human</span>`;
+      }
+      // re-bind tagline element reference because sub innerHTML changes
+      window._taglineEl = document.getElementById("tagline");
+    }
+    window._taglineEl = taglineEl;
+
+    // Title glow pulse
+    function glow(){
+      title.classList.remove("glowPulse");
+      void title.offsetWidth; // reflow to restart animation
+      title.classList.add("glowPulse");
+    }
+
+    // Toast
+    let toastTimer;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> toast.classList.remove("show"), 1400);
+    }
+
+    // YES
+    yesBtn.addEventListener("click", (e) => {
+      setMode("yes");
+      glow();
+      spawnConfetti();
+      burstHearts(window.innerWidth*0.5, window.innerHeight*0.52);
+      showToast("💖 CONFIRMED 💖");
+    });
+
+    // MAYBE
+    maybeBtn.addEventListener("click", (e) => {
+      setMode("maybe");
+      const r = stage.getBoundingClientRect();
+      burstHearts(r.left + r.width*0.48, r.top + r.height*0.56);
+      showToast("👀 okay… but say YES");
+    });
+
+    // NO button dodges
+    let noScale = 1;
+    function dodgeNo(){
+      const rect = stage.getBoundingClientRect();
+      const maxX = Math.max(0, rect.width/2 - 140);
+      const maxY = Math.max(0, rect.height/2 - 120);
+
+      const x = (Math.random()*2 - 1) * maxX;
+      const y = (Math.random()*2 - 1) * maxY;
+
+      noScale = Math.max(0.74, noScale - 0.04);
+
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${noScale})`;
+
+      const r = noBtn.getBoundingClientRect();
+      burstHearts(r.left + r.width/2, r.top + r.height/2);
+
+      setMode("no");
+      showToast("🙃 nope button ran away");
+    }
+    noBtn.addEventListener("mouseenter", dodgeNo);
+    noBtn.addEventListener("mousedown", dodgeNo);
+    noBtn.addEventListener("click", dodgeNo);
+
+    // RESET
+    resetBtn.addEventListener("click", () => {
+      noScale = 1;
+      noBtn.style.transform = "translate(0px, 0px) scale(1)";
+      setMode("ask");
+      showToast("✨ reset complete ✨");
+    });
+
+    // Keep dodged button inside on resize
+    window.addEventListener("resize", () => {
+      if(noBtn.style.transform && noBtn.style.transform.includes("translate")){
+        // soften: bring it closer on resize
+        noBtn.style.transform = "translate(0px, 0px) scale(" + noScale + ")";
+      }
+    });
+  </script>
+</body>
+</html>
