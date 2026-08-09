@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Photo Collage Maker for Cristina</title>
+<style>
+:root{--ink:#402f29;--red:#b74450;--paper:#fffaf0;--pink:#f4c5c9;--gold:#f1d486}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px 12px;color:var(--ink);font-family:Arial,sans-serif;background:#79503d radial-gradient(#a87860 1px,transparent 1px);background-size:18px 18px}
+.paper{position:relative;width:min(820px,100%);min-height:680px;padding:55px clamp(22px,7vw,70px);background:var(--paper);box-shadow:0 20px 50px #2d1b1688;overflow:hidden}
+.paper:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 31px,#6d97bb18 32px);pointer-events:none}
+.tape{position:absolute;top:15px;left:50%;width:125px;height:30px;transform:translateX(-50%) rotate(-3deg);background:#e3cd9fbb}
+.eyebrow{display:block;text-transform:uppercase;letter-spacing:.15em;font-size:.75rem;font-weight:bold;color:var(--red);margin-bottom:6px}
+h1{font-family:"Comic Sans MS",cursive;font-size:clamp(3rem,9vw,5.6rem);line-height:1.05;margin:12px 0 10px}
+p{line-height:1.6;margin:0}
+.cards{display:grid;gap:18px;margin:28px 0}
+.card{padding:18px;background:#fff;border:2px solid #d9c7ba;box-shadow:3px 5px 12px #34231c33}
+button,a.button{border:0;border-radius:3px;padding:14px 20px;background:var(--red);color:#fff;font-size:1rem;font-weight:bold;cursor:pointer;box-shadow:4px 4px #6c2932;text-decoration:none;display:inline-block}
+button:hover,a.button:hover{transform:translate(-1px,-2px)}
+input[type=file]{display:block;margin-top:12px}
+.label{margin-top:16px;font-weight:bold}
+.grid{display:grid;gap:10px;margin:20px 0}
+.grid.two{grid-template-columns:1fr 1fr}
+.preview{min-height:120px;background:#f8ede2;border:3px dashed #d3b4ad;display:grid;place-items:center;color:#98756c;text-align:center;padding:18px}
+.preview img{max-width:100%;max-height:220px;object-fit:cover;border-radius:8px}
+.canvas-wrap{display:grid;gap:14px}
+.status{font-size:.95rem;color:#5a3d31}
+.download{margin-top:10px}
+.decor{color:var(--red);font-size:1.2rem;margin-top:8px}
+@media(max-width:700px){.grid.two{grid-template-columns:1fr}}
+@media(max-width:520px){body{padding:10px}.paper{min-height:calc(100vh - 20px);padding:48px 20}}
+</style>
+</head>
+<body><main class="paper"><div class="tape"></div>
+<span class="eyebrow">For my love</span><h1>Photo Collage Maker</h1><p>Create a sweet picture collage for Cristina with up to 4 photos.</p>
+<div class="cards">
+<div class="card">
+<span class="label">Select your photos</span>
+<input id="files" type="file" accept="image/*" multiple>
+<p class="status">Choose 2–4 images for the collage.</p>
+</div>
+<div class="card canvas-wrap">
+<div class="label">Collage preview</div>
+<div id="preview" class="preview">No images selected yet.</div>
+<button id="create" onclick="createCollage()" disabled>Create collage</button>
+<div class="download"><a id="downloadLink" class="button" href="#" download="cristina-collage.png" style="display:none">Download collage</a></div>
+<div class="decor">💖 Cristina, this one is made with love 💖</div>
+</div>
+</div>
+<div class="card">
+<div class="label">Instructions</div>
+<p>Pick your favorite photos, then press “Create collage.” The result will be rendered as a shareable PNG.</p>
+<p>Use the download button to save the finished collage.</p>
+</div>
+<div style="margin-top:26px"><a class="button" href="index.html">← Back to hub</a></div>
+</main>
+<script>
+const filesInput=document.getElementById('files');
+const preview=document.getElementById('preview');
+const createButton=document.getElementById('create');
+const downloadLink=document.getElementById('downloadLink');
+let selectedFiles=[];
+filesInput.addEventListener('change',()=>{
+ const files=[...filesInput.files].slice(0,4);
+ selectedFiles=files;
+ if(!files.length){preview.textContent='No images selected yet.';createButton.disabled=true;downloadLink.style.display='none';return}
+ preview.innerHTML='';
+ const grid=document.createElement('div');
+ grid.className='grid two';
+ files.forEach(file=>{const img=document.createElement('img');img.src=URL.createObjectURL(file);img.onload=()=>URL.revokeObjectURL(img.src);grid.appendChild(img)});
+ preview.appendChild(grid);
+ preview.appendChild(Object.assign(document.createElement('div'),{textContent:`${files.length} image${files.length===1?'':'s'} ready`,className:'status'}));
+ createButton.disabled=files.length<2;
+ downloadLink.style.display='none';
+});
+function createCollage(){if(selectedFiles.length<2)return;
+ const count=selectedFiles.length;
+ const cols=count<=2?count:2;
+ const rows=Math.ceil(count/cols);
+ const size=800;
+ const padding=18;
+ const cellSize=(size - padding*(cols+1))/cols;
+ const canvas=document.createElement('canvas');
+ canvas.width=size;
+ canvas.height=size + 110;
+ const ctx=canvas.getContext('2d');
+ ctx.fillStyle='#fff4ee';
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle='#f8d5d1';
+ ctx.fillRect(0,0,size,20);
+ ctx.fillStyle='#402f29';
+ ctx.font='32px Comic Sans MS, cursive';
+ ctx.fillText('For Cristina',20,44);
+ ctx.font='22px Arial, sans-serif';
+ ctx.fillText('Made with love 💖',20,76);
+ const drawImage=(img,x,y,w,h)=>{
+   const ratio=Math.min(w/img.width,h/img.height);
+   const iw=img.width*ratio;
+   const ih=img.height*ratio;
+   const ox=x+(w-iw)/2;
+   const oy=y+(h-ih)/2;
+   ctx.drawImage(img,ox,oy,iw,ih);
+ };
+ const promises=selectedFiles.map(file=>new Promise(resolve=>{
+   const img=new Image();
+   img.onload=()=>resolve(img);
+   img.src=URL.createObjectURL(file);
+ }));
+ Promise.all(promises).then(images=>{
+   images.forEach((img,index)=>{
+     const col=index%cols;
+     const row=Math.floor(index/cols);
+     const x=padding + col*(cellSize+padding);
+     const y=padding + row*(cellSize+padding) + 90;
+     ctx.save();
+     ctx.beginPath();
+     ctx.roundRect(x,y,cellSize,cellSize,16);
+     ctx.clip();
+     drawImage(img,x,y,cellSize,cellSize);
+     ctx.restore();
+     ctx.strokeStyle='#ffffff';
+     ctx.lineWidth=6;
+     ctx.strokeRect(x,y,cellSize,cellSize);
+   });
+   preview.innerHTML='';
+   const previewImg=document.createElement('img');
+   previewImg.src=canvas.toDataURL('image/png');
+   preview.appendChild(previewImg);
+   downloadLink.href=canvas.toDataURL('image/png');
+   downloadLink.style.display='inline-block';
+   downloadLink.textContent='Download collage';
+ });
+}
+</script>
+</body>
+</html>
