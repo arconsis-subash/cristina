@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cristina's Hub</title>
+<style>
+:root{--ink:#402f29;--red:#b74450;--paper:#fffaf0;--pink:#f4c5c9;--gold:#f1d486}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px 12px;color:var(--ink);font-family:Arial,sans-serif;background:#79503d radial-gradient(#a87860 1px,transparent 1px);background-size:18px 18px}
+.paper{position:relative;width:min(920px,100%);min-height:660px;padding:55px clamp(22px,7vw,70px);background:var(--paper);box-shadow:0 20px 50px #2d1b1688;overflow:hidden}
+.paper:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 31px,#6d97bb18 32px);pointer-events:none}
+.tape{position:absolute;top:15px;left:50%;width:125px;height:30px;transform:translateX(-50%) rotate(-3deg);background:#e3cd9fbb}
+.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:.75rem;font-weight:bold;color:var(--red);margin-bottom:8px}
+h1{font-family:"Comic Sans MS",cursive;font-size:clamp(3rem,9vw,5.6rem);line-height:1.05;margin:0 0 10px}
+p{line-height:1.6;margin:0}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:22px;margin-top:40px}
+.card{padding:24px;background:#fff;border:2px solid #d9c7ba;box-shadow:3px 5px 12px #34231c33;display:flex;flex-direction:column;justify-content:space-between}
+.card h2{font-size:1.8rem;margin:0 0 12px}
+.card p{margin:0 0 22px}
+.button{border:0;border-radius:3px;padding:14px 20px;background:var(--red);color:#fff;font-size:1rem;font-weight:bold;cursor:pointer;box-shadow:4px 4px #6c2932;text-decoration:none;text-align:center}
+.button:hover{transform:translate(-1px,-2px)}
+.footer{margin-top:32px;font-size:.95rem;color:#5a3d31}
+@media(max-width:760px){.cards{grid-template-columns:1fr}}
+@media(max-width:520px){body{padding:10px}.paper{min-height:calc(100vh - 20px);padding:48px 20}}
+</style>
+</head>
+<body><main class="paper"><div class="tape"></div>
+<p class="eyebrow">Cristina's creative playground</p>
+<h1>Choose your page</h1>
+<p>Start with the baby quiz or make a special photo collage for Cristina. More pages are easy to add from here.</p>
+<div class="cards">
+<div class="card"><div><h2>Baby Quiz</h2><p>Test how well you know your baby with 10 cheeky questions. Pass, brag, and play again.</p></div><a class="button" href="quiz.html">Open quiz</a></div>
+<div class="card"><div><h2>Photo Collage Maker</h2><p>Create a romantic picture collage for Cristina with your best photos and save it as a PNG.</p></div><a class="button" href="photo-collage.html">Open collage maker</a></div>
+<div class="card"><div><h2>Our Timeline</h2><p>A creative, photo-rich timeline of memories since we first chatted — open to relive special moments.</p></div><a class="button" href="timeline.html">Open timeline</a></div>
+</div>
+<div class="footer">This hub is the start of your multi-page Cristina experience. Add new pages and link them here whenever you like.</div>
+</main>
+</body>
+</html>

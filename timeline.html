@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cristina & Subash — Our Timeline</title>
+  <style>
+    :root{--bg:#fff5f8;--accent:#ff6b9f;--muted:#6b6b6b}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#fff 0%,#fff5f8 100%); color:#222; margin:0; padding:32px}
+    .container{max-width:900px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:28px}
+    .subtitle{color:var(--muted)}
+
+    .timeline{position:relative;padding:40px 0;margin-top:24px}
+    .line{position:absolute;left:50%;width:4px;background:linear-gradient(#ff9bbf,#ff6b9f);top:0;bottom:0;transform:translateX(-50%);border-radius:4px}
+    .event{position:relative;width:50%;padding:16px 32px;box-sizing:border-box}
+    .event.left{left:0;text-align:right}
+    .event.right{left:50%}
+    .card{display:inline-block;background:white;padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:420px}
+    .date{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .photo{width:96px;height:96px;border-radius:12px;overflow:hidden;display:inline-block;vertical-align:middle;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .dot{position:absolute;left:50%;transform:translateX(-50%);width:20px;height:20px;background:var(--accent);border-radius:50%;box-shadow:0 6px 14px rgba(255,107,159,0.28)}
+    .event.left .dot{left:50%}
+    .event .card p{margin:6px 0 0}
+    .heart{font-size:20px;margin-left:8px;color:var(--accent)}
+
+    /* responsive */
+    @media (max-width:720px){
+      .event{width:100%;left:0;padding-left:64px;padding-right:20px;text-align:left}
+      .line{left:28px}
+      .dot{left:28px}
+      .event.right{left:0}
+    }
+
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center}
+    .modal .inner{background:#fff;padding:16px;border-radius:12px;max-width:92vw;max-height:92vh;overflow:auto}
+    .controls{display:flex;gap:8px;align-items:center;margin-top:12px}
+    .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:10px;border:none;cursor:pointer}
+    .muted-btn{background:#eee;color:#444}
+
+    form.add{margin-top:28px;background:linear-gradient(180deg,#fff,#fff0f6);padding:12px;border-radius:12px}
+    label{display:block;margin:8px 0 4px;color:var(--muted);font-size:13px}
+    input[type=text], input[type=date], textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #eee}
+    input[type=file]{border-radius:8px}
+    .small{font-size:13px;color:var(--muted)}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div style="font-size:48px">💖</div>
+      <div>
+        <h1>Cristina & Subash — Our Timeline <span class="heart">♥</span></h1>
+        <div class="subtitle">A little interactive memory lane — add photos, relive moments.</div>
+      </div>
+    </header>
+
+    <section class="timeline" id="timeline">
+      <div class="line"></div>
+      <!-- events go here -->
+    </section>
+
+    <form class="add" id="addForm">
+      <h3>Add a memory</h3>
+      <label for="evDate">Date</label>
+      <input id="evDate" type="date" required />
+      <label for="evTitle">Title</label>
+      <input id="evTitle" type="text" placeholder="e.g., First WhatsApp message" required />
+      <label for="evText">Message</label>
+      <textarea id="evText" rows="3" placeholder='e.g., "U know i had birthday today"'></textarea>
+      <label for="evPhoto">Photo (optional)</label>
+      <input id="evPhoto" type="file" accept="image/*" />
+      <div class="controls">
+        <button class="btn" type="submit">Save to browser</button>
+        <button class="muted-btn" type="button" id="resetBtn">Reset saved</button>
+        <div style="margin-left:auto;color:var(--muted);font-size:13px">Photos saved to your browser only</div>
+      </div>
+    </form>
+
+    <footer>Open this file in your browser. Replace placeholder images in the HTML or add photos using the form above.</footer>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="inner" id="modalInner"></div>
+  </div>
+
+  <script>
+    // Auto-generated initialEvents with matched photos
+    const initialEvents = [
+      {date: '2026-07-05', title: 'Message from Iepuraș❤️', text: 'I know I\'ve been talking cold to you and maybe it feels like I\'m just angry, but the truth is I\'m really hurt. For you maybe it doesn\'t seem like such a big thing, but for me it is. It wasn\'t just abo', photo: 'assets/timeline-photos/00048220-PHOTO-2026-07-05-14-30-09.jpg'},
+      {date: '2025-01-17', title: 'Message from Iepuraș❤️', text: 'Good morning my love. Just a little reminder that you’re the first thought on my mind as I wake up. I hope your day will be as great as you are! I love you so much and I miss you more! Can\'t wait to s', photo: 'assets/timeline-photos/00006253-PHOTO-2025-01-17-22-25-53.jpg'},
+      {date: '2025-09-27', title: 'Message from Iepuraș❤️', text: 'Baby, I\'m joking, we have nothing to talk about. I\'m sorry, I just wanted to stress you a little bit 😂 but my heart doesn\'t let me to make you feel bad for so long.. please stop 🛑 overthinking everyth', photo: 'assets/timeline-photos/00029011-PHOTO-2025-09-27-04-18-21.jpg'},
+      {date: '2025-10-13', title: 'Message from Iepuraș❤️', text: 'Hey… I just wanted to say I’m really sorry for how I was today. I know I acted ugly, cold, uninterested, and I feel bad about it now. I didn’t mean to make you feel that way. I was just upset and mayb', photo: 'assets/timeline-photos/00031984-PHOTO-2025-10-13-09-02-02.jpg'},
+      {date: '2025-04-21', title: 'Message from Iepuraș❤️', text: 'I’ve been thinking a lot about yesterday, and I just need to open my heart to you. I love you so much, more than words can ever say. And sometimes, when you love someone so deeply, so bad, that love c', photo: 'assets/timeline-photos/00014380-PHOTO-2025-04-21-19-25-30.jpg'},
+      {date: '2025-07-11', title: 'Message from Iepuraș❤️', text: 'My baby, I wish you a wonderful day, don\'t think negative, don\'t fuck your handsome head just think that tomorrow we will be together 🥹❤️ I miss you so much, and I can\'t wait to be in your arms, to sm', photo: 'assets/timeline-photos/00021019-PHOTO-2025-07-11-17-39-42.jpg'},
+      {date: '2025-10-09', title: 'Message from Iepuraș❤️', text: 'My sweetie..I’ve been trying to reach you the whole day ,I keep writing you again and again, hoping that maybe this time the message will go through. Every time I see it still not sent, my heart just ', photo: 'assets/timeline-photos/00031158-PHOTO-2025-10-09-03-33-55.jpg'},
+      {date: '2025-10-26', title: 'Message from Iepuraș❤️', text: 'I love you so much my baby 🥺❤️ and I miss you more. I really wish you to have fun this last few days and be there with your parents and let them take advantage of you being there 🥺❤️ I love you and yo', photo: 'assets/timeline-photos/00034151-PHOTO-2025-10-26-17-20-43.jpg'},
+      {date: '2025-01-04', title: 'Message from Iepuraș❤️', text: 'Good night my love, I hope that you will have good sleep and sweet dreams 🥺🥰❤️. I send you a big, big, big hug and an ♾️ of kisses ❤️. Love you so much and miss you more ❤️🥰', photo: 'assets/timeline-photos/00004621-PHOTO-2025-01-04-14-41-36.jpg'},
+      {date: '2025-01-16', title: 'Message from Iepuraș❤️', text: 'Have an easy day my love. And don\'t think about that dream, how I said , it was just a dream. I love you so much and miss you more. ❤️❤️❤️ Take care and drive slow ❤️', photo: 'assets/timeline-photos/00006188-PHOTO-2025-01-16-17-21-02.jpg'},
+      {date: '2025-03-05', title: 'Message from Iepuraș❤️', text: 'Hey, don\'t take it seriously please... I joked just.. I mean that thingy (that you let me sleep without a hug wasn\'t a joke 😭) . I love you more than words can explain, more than you can imagine, more', photo: 'assets/timeline-photos/00010320-STICKER-2025-03-05-06-43-59.webp'},
+      {date: '2025-03-28', title: 'Message from Iepuraș❤️', text: 'Good morning my sweetie ❤️ ❤️❤️ I hope that you\'re feeling better today, I\'m really sorry for yesterday..I still feel bad, I would never disrespect you like this..🥺 I hope you have a wonderful day and', photo: 'assets/timeline-photos/00012607-PHOTO-2025-03-28-23-00-02.jpg'},
+      {date: '2025-06-07', title: 'Message from Iepuraș❤️', text: 'Hey my sweetie, I just want to say I’m really sorry for how I reacted. I know I was exaggerating, and I hate that I let my overthinking get the best of me. I realize it sounds stupid to be jealous abo', photo: 'assets/timeline-photos/00017725-PHOTO-2025-06-07-14-02-49.jpg'},
+      {date: '2025-07-27', title: 'Message from Iepuraș❤️', text: 'My baby, I want that you understand once for all that I am so in love with you, that I love you for who you are, I love your heart, your brain. I love waking up in the morning with you, falling asleep', photo: 'assets/timeline-photos/00022656-PHOTO-2025-07-27-22-39-16.jpg'},
+      {date: '2025-08-10', title: 'Message from Iepuraș❤️', text: 'Good night my handsome little boy 🥹❤️ I love you so much, I miss you more 😭❤️. I wish you sweet dreams and think that in a few days I\'m back in your arms. ❤️❤️❤️', photo: 'assets/timeline-photos/00024807-STICKER-2025-08-10-21-00-16.webp'},
+      {date: '2025-08-13', title: 'Message from Iepuraș❤️', text: 'You have no idea how proud I am of you! 🥹❤️ I knew that you will do it and you will take it this time! It was supposed to be like this. I love you so much and I can\'t wait to see you and hug you and k', photo: 'assets/timeline-photos/00025374-PHOTO-2025-08-13-21-02-27.jpg'},
+      {date: '2025-09-19', title: 'Message from Iepuraș❤️', text: 'My love ❤️, it’s 22:22 — our moment, our number, our forever. You’re up in the sky now, flying home, but it feels like you took my heart with you. I already miss you so much that it hurts, and every s', photo: 'assets/timeline-photos/00028236-PHOTO-2025-09-19-14-06-30.jpg'},
+      {date: '2025-10-26', title: 'Message from Iepuraș❤️', text: 'I\'m missing you so much... I\'m so happy that in a few days I\'ll be again in your arms 🥺❤️ I love you so much my baby ❤️❤️❤️', photo: 'assets/timeline-photos/00034151-PHOTO-2025-10-26-17-20-43.jpg'},
+      {date: '2025-01-10', title: 'Message from Iepuraș❤️', text: 'I love you so much and I miss you more ❤️', photo: 'assets/timeline-photos/00005535-PHOTO-2025-01-10-22-01-53.jpg'},
+      {date: '2025-01-21', title: 'Message from Iepuraș❤️', text: 'I love you and I miss you ❤️', photo: 'assets/timeline-photos/00006473-PHOTO-2025-01-21-10-54-57.jpg'},
+      {date: '2025-01-31', title: 'Message from Iepuraș❤️', text: 'Good morning my love, you need to know that now I belong to you and only you. You don\'t need to stress about it... You show me with this how much you care 🥹❤️. I love you endlessly and can\'t wait to s', photo: 'assets/timeline-photos/00007577-PHOTO-2025-01-31-22-00-17.jpg'},
+      {date: '2025-02-05', title: 'Message from Iepuraș❤️', text: 'Even if I\'m feeling a little down today, I don’t want that to affect you. You mean so much to me, and no matter how I feel, I always want you to have a good day. I hope you smile a lot, and remember h', photo: 'assets/timeline-photos/00007949-PHOTO-2025-02-05-22-42-20.jpg'},
+      {date: '2025-02-10', title: 'Message from Iepuraș❤️', text: 'And I just wanted to say I’m really sorry for yesterday. I never want anything to come between us because you mean the world to me, I was maybe because of my period a little bit sensitive. I hope toda', photo: 'assets/timeline-photos/00008368-PHOTO-2025-02-10-16-22-38.jpg'},
+      {date: '2025-02-12', title: 'Message from Iepuraș❤️', text: 'I\'m happy to hear that. And my good mood it\'s just because of you, I enjoyed our time yesterday, I enjoyed you yesterday 😏❤️. I\'m so thankful for you and I\'m thankful to you also. I\'m so lucky to have', photo: 'assets/timeline-photos/00008556-PHOTO-2025-02-12-20-52-49.jpg'},
+      {date: '2025-02-20', title: 'Message from Iepuraș❤️', text: 'Good morning my sweetie ❤️☀️ . I hope that you slept good and dream about me 🙈❤️😂. I wish you a wonderful day, with less stress and more happiness ❤️ I love you endlessly ❤️ (never forget that you\'re ', photo: 'assets/timeline-photos/00009405-PHOTO-2025-02-20-17-43-27.jpg'},
+    ];
+
+    function placeholderSVG(color){
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='${color}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='36' fill='#fff'>Your photo here</text></svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    // load saved events from localStorage
+    function loadEvents(){
+      try{
+        const raw = localStorage.getItem('cristina_timeline_events');
+        if(raw) return JSON.parse(raw);
+      }catch(e){console.warn(e)}
+      return initialEvents;
+    }
+    function saveEvents(arr){ localStorage.setItem('cristina_timeline_events', JSON.stringify(arr)); }
+
+    const timeline = document.getElementById('timeline');
+    function render(){
+      const events = loadEvents().slice().sort((a,b)=> new Date(a.date) - new Date(b.date));
+      timeline.querySelectorAll('.event').forEach(n=>n.remove());
+      events.forEach((ev,i)=>{
+        const side = (i%2===0)?'left':'right';
+        const el = document.createElement('div'); el.className = 'event '+side;
+        const inner = document.createElement('div'); inner.className='card';
+        const date = document.createElement('div'); date.className='date'; date.textContent = formatDate(ev.date);
+        const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.gap='12px';
+        const photoWrap = document.createElement('div'); photoWrap.className='photo';
+        const img = document.createElement('img'); img.src = ev.photo || placeholderSVG('#ffd6e8'); img.alt = ev.title || 'photo';
+        img.style.cursor='pointer'; img.addEventListener('click', ()=> openModal(ev));
+        photoWrap.appendChild(img);
+        const txt = document.createElement('div'); txt.style.flex='1';
+        const h = document.createElement('div'); h.style.fontWeight='600'; h.textContent = ev.title || '';
+        const p = document.createElement('p'); p.textContent = ev.text || '';
+        txt.appendChild(h); txt.appendChild(p);
+        if(side==='left'){ row.appendChild(txt); row.appendChild(photoWrap);} else { row.appendChild(photoWrap); row.appendChild(txt);}        
+        inner.appendChild(date); inner.appendChild(row);
+        el.appendChild(inner);
+        const dot = document.createElement('div'); dot.className='dot'; el.appendChild(dot);
+        timeline.appendChild(el);
+      });
+    }
+
+    function formatDate(d){
+      const dt = new Date(d);
+      if(isNaN(dt)) return d;
+      return dt.toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'});
+    }
+
+    // modal
+    const modal = document.getElementById('modal');
+    const modalInner = document.getElementById('modalInner');
+    function openModal(ev){
+      modalInner.innerHTML = `<h2>${escapeHtml(ev.title||'')}</h2><div style="margin-top:8px;color:var(--muted)">${formatDate(ev.date)}</div><div style='margin-top:12px'><img src='${ev.photo}' style='max-width:100%;border-radius:12px' /></div><p style='margin-top:8px'>${escapeHtml(ev.text||'')}</p>`;
+      modal.style.display='flex';
+    }
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; });
+
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+
+    // handle form
+    const addForm = document.getElementById('addForm');
+    addForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const d = document.getElementById('evDate').value;
+      const t = document.getElementById('evTitle').value.trim();
+      const txt = document.getElementById('evText').value.trim();
+      const file = document.getElementById('evPhoto').files[0];
+      let photo = null;
+      if(file){ photo = await readFileAsDataURL(file); }
+      const events = loadEvents();
+      events.push({date:d||new Date().toISOString().slice(0,10), title:t, text:txt, photo:photo});
+      saveEvents(events);
+      addForm.reset();
+      render();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{ if(confirm('Clear saved memories from this browser?')){ localStorage.removeItem('cristina_timeline_events'); render(); }});
+
+    function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }); }
+
+    // initial render
+    render();
+  </script>
+</body>
+</html>
