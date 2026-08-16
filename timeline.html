@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cristina & Subash — Our Timeline</title>
+  <style>
+    :root{--bg:#fff5f8;--accent:#ff6b9f;--muted:#6b6b6b}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#fff 0%,#fff5f8 100%); color:#222; margin:0; padding:32px}
+    .container{max-width:900px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:28px}
+    .subtitle{color:var(--muted)}
+
+    .timeline{position:relative;padding:40px 0;margin-top:24px}
+    .line{position:absolute;left:50%;width:4px;background:linear-gradient(#ff9bbf,#ff6b9f);top:0;bottom:0;transform:translateX(-50%);border-radius:4px}
+    .event{position:relative;width:50%;padding:16px 32px;box-sizing:border-box}
+    .event.left{left:0;text-align:right}
+    .event.right{left:50%}
+    .card{display:inline-block;background:white;padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:420px}
+    .date{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .photo{width:96px;height:96px;border-radius:12px;overflow:hidden;display:inline-block;vertical-align:middle;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .dot{position:absolute;left:50%;transform:translateX(-50%);width:20px;height:20px;background:var(--accent);border-radius:50%;box-shadow:0 6px 14px rgba(255,107,159,0.28)}
+    .event.left .dot{left:50%}
+    .event .card p{margin:6px 0 0}
+    .heart{font-size:20px;margin-left:8px;color:var(--accent)}
+
+    /* responsive */
+    @media (max-width:720px){
+      .event{width:100%;left:0;padding-left:64px;padding-right:20px;text-align:left}
+      .line{left:28px}
+      .dot{left:28px}
+      .event.right{left:0}
+    }
+
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center}
+    .modal .inner{background:#fff;padding:16px;border-radius:12px;max-width:92vw;max-height:92vh;overflow:auto}
+    .controls{display:flex;gap:8px;align-items:center;margin-top:12px}
+    .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:10px;border:none;cursor:pointer}
+    .muted-btn{background:#eee;color:#444}
+
+    form.add{margin-top:28px;background:linear-gradient(180deg,#fff,#fff0f6);padding:12px;border-radius:12px}
+    label{display:block;margin:8px 0 4px;color:var(--muted);font-size:13px}
+    input[type=text], input[type=date], textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #eee}
+    input[type=file]{border-radius:8px}
+    .small{font-size:13px;color:var(--muted)}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div style="font-size:48px">💖</div>
+      <div>
+        <h1>Cristina & Subash — Our Timeline <span class="heart">♥</span></h1>
+        <div class="subtitle">A little interactive memory lane — add photos, relive moments.</div>
+      </div>
+    </header>
+
+    <section class="timeline" id="timeline">
+      <div class="line"></div>
+      <!-- events go here -->
+    </section>
+
+    <form class="add" id="addForm">
+      <h3>Add a memory</h3>
+      <label for="evDate">Date</label>
+      <input id="evDate" type="date" required />
+      <label for="evTitle">Title</label>
+      <input id="evTitle" type="text" placeholder="e.g., First WhatsApp message" required />
+      <label for="evText">Message</label>
+      <textarea id="evText" rows="3" placeholder='e.g., "U know i had birthday today"'></textarea>
+      <label for="evPhoto">Photo (optional)</label>
+      <input id="evPhoto" type="file" accept="image/*" />
+      <div class="controls">
+        <button class="btn" type="submit">Save to browser</button>
+        <button class="muted-btn" type="button" id="resetBtn">Reset saved</button>
+        <div style="margin-left:auto;color:var(--muted);font-size:13px">Photos saved to your browser only</div>
+      </div>
+    </form>
+
+    <footer>Open this file in your browser. Replace placeholder images in the HTML or add photos using the form above.</footer>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="inner" id="modalInner"></div>
+  </div>
+
+  <script>
+    // Initial events curated from _chat.txt (20–25 highlights). Dates are ISO strings for easy sorting.
+    const initialEvents = [
+      {date: '2024-11-20', title: 'First WhatsApp chat', text: 'Our first message on WhatsApp — the start of everything.', photo: placeholderSVG('#ffb6c1')},
+      {date: '2024-11-20', title: 'First photos exchanged', text: 'Photos and voice notes on our very first night chatting.', photo: placeholderSVG('#ffd7e0')},
+      {date: '2024-11-22', title: 'Birthday message', text: 'Subash: "U know I had birthday today" — first birthday mention.', photo: placeholderSVG('#ffc0cb')},
+      {date: '2024-11-28', title: 'Long video call', text: 'A long video call together (2 hours) — talking late into the night.', photo: placeholderSVG('#ffe7f0')},
+      {date: '2024-12-03', title: 'First visitors & photos', text: 'Shared photos and a cosy "visitor" moment — winter vibes.', photo: placeholderSVG('#ffd1e6')},
+      {date: '2024-12-12', title: 'Weihnachtsmarkt (Christmas market)', text: 'Planned Markt visit and festive messages — first holiday season together.', photo: placeholderSVG('#ffecf4')},
+      {date: '2024-12-21', title: 'Metro photo', text: 'Subash: a little city photo sent from the metro — small memories.', photo: placeholderSVG('#ffe0e9')},
+      {date: '2024-12-28', title: 'Many voice notes', text: 'A stream of voice messages and sweet check-ins over the holidays.', photo: placeholderSVG('#ffdbe6')},
+      {date: '2025-01-04', title: 'First I love you', text: 'Warm "I love you" messages exchanged — feelings growing.', photo: placeholderSVG('#ffd0d8')},
+      {date: '2025-01-11', title: 'First meet planned', text: '"I\'m feeling like I\'ll meet you for the first time" — excitement builds.', photo: placeholderSVG('#ffe6ee')},
+      {date: '2025-01-17', title: 'Good morning note', text: 'Good morning message: "Can\'t wait to see you tomorrow!" — butterflies.', photo: placeholderSVG('#ffd9e3')},
+      {date: '2025-02-10', title: 'Arrival & visit', text: '"I arrived finally" — visits begin, hugs soon.', photo: placeholderSVG('#ffe3ea')},
+      {date: '2025-03-07', title: 'Support & apologies', text: 'Moments of support and honest apologies — learning to love better.', photo: placeholderSVG('#ffeef6')},
+      {date: '2025-04-21', title: 'Heartfelt letter', text: 'A long message opening the heart: "I love you so much... thank you for being patient with my heart."', photo: placeholderSVG('#ffd2de')},
+      {date: '2025-08-10', title: 'Our first date', text: '"But I love it because it\'s from our first date" — the first date memory (pizza and all).', photo: placeholderSVG('#ffc8d1')},
+      {date: '2025-10-17', title: 'First good-morning photo', text: 'A sweet morning photo and the note: "First message at 22:22" — tiny rituals.', photo: placeholderSVG('#ffd1d8')},
+      {date: '2025-11-17', title: 'Realizing love', text: '"For the first time in my life I understand what love is" — a milestone of feeling.', photo: placeholderSVG('#ffbcd0')},
+      {date: '2025-12-12', title: 'Holiday call & warmth', text: 'More calls, markets, and the cosy end-of-year rhythm together.', photo: placeholderSVG('#ffeef3')},
+      {date: '2026-01-22', title: 'Promises & comfort', text: 'Notes about being there for each other and small daily comforts.', photo: placeholderSVG('#ffe0e8')},
+      {date: '2026-06-15', title: 'Best birthday', text: '"Best ever birthday" — a big celebration with people who love her.', photo: placeholderSVG('#ffb6c9')},
+      {date: '2026-06-16', title: 'After-birthday feelings', text: 'Warm reflections and apologies — growing stronger together.', photo: placeholderSVG('#ffdfe8')},
+      {date: '2026-07-07', title: 'Hard talk & resolve', text: 'A difficult conversation about feelings and boundaries — real relationship work.', photo: placeholderSVG('#ffe9ef')}
+    ];
+
+    function placeholderSVG(color){
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='${color}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='36' fill='#fff'>Your photo here</text></svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    // load saved events from localStorage
+    function loadEvents(){
+      try{
+        const raw = localStorage.getItem('cristina_timeline_events');
+        if(raw) return JSON.parse(raw);
+      }catch(e){console.warn(e)}
+      return initialEvents;
+    }
+    function saveEvents(arr){ localStorage.setItem('cristina_timeline_events', JSON.stringify(arr)); }
+
+    const timeline = document.getElementById('timeline');
+    function render(){
+      const events = loadEvents().slice().sort((a,b)=> new Date(a.date) - new Date(b.date));
+      timeline.querySelectorAll('.event').forEach(n=>n.remove());
+      events.forEach((ev,i)=>{
+        const side = (i%2===0)?'left':'right';
+        const el = document.createElement('div'); el.className = 'event '+side;
+        const inner = document.createElement('div'); inner.className='card';
+        const date = document.createElement('div'); date.className='date'; date.textContent = formatDate(ev.date);
+        const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.gap='12px';
+        const photoWrap = document.createElement('div'); photoWrap.className='photo';
+        const img = document.createElement('img'); img.src = ev.photo || placeholderSVG('#ffd6e8'); img.alt = ev.title || 'photo';
+        img.style.cursor='pointer'; img.addEventListener('click', ()=> openModal(ev));
+        photoWrap.appendChild(img);
+        const txt = document.createElement('div'); txt.style.flex='1';
+        const h = document.createElement('div'); h.style.fontWeight='600'; h.textContent = ev.title || '';
+        const p = document.createElement('p'); p.textContent = ev.text || '';
+        txt.appendChild(h); txt.appendChild(p);
+        if(side==='left'){ row.appendChild(txt); row.appendChild(photoWrap);} else { row.appendChild(photoWrap); row.appendChild(txt);}        
+        inner.appendChild(date); inner.appendChild(row);
+        el.appendChild(inner);
+        const dot = document.createElement('div'); dot.className='dot'; el.appendChild(dot);
+        timeline.appendChild(el);
+      });
+    }
+
+    function formatDate(d){
+      const dt = new Date(d);
+      if(isNaN(dt)) return d;
+      return dt.toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'});
+    }
+
+    // modal
+    const modal = document.getElementById('modal');
+    const modalInner = document.getElementById('modalInner');
+    function openModal(ev){
+      modalInner.innerHTML = `<h2>${escapeHtml(ev.title||'')}</h2><div style="margin-top:8px;color:var(--muted)">${formatDate(ev.date)}</div><div style='margin-top:12px'><img src='${ev.photo}' style='max-width:100%;border-radius:12px' /></div><p style='margin-top:8px'>${escapeHtml(ev.text||'')}</p>`;
+      modal.style.display='flex';
+    }
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; });
+
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+
+    // handle form
+    const addForm = document.getElementById('addForm');
+    addForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const d = document.getElementById('evDate').value;
+      const t = document.getElementById('evTitle').value.trim();
+      const txt = document.getElementById('evText').value.trim();
+      const file = document.getElementById('evPhoto').files[0];
+      let photo = null;
+      if(file){ photo = await readFileAsDataURL(file); }
+      const events = loadEvents();
+      events.push({date:d||new Date().toISOString().slice(0,10), title:t, text:txt, photo:photo});
+      saveEvents(events);
+      addForm.reset();
+      render();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{ if(confirm('Clear saved memories from this browser?')){ localStorage.removeItem('cristina_timeline_events'); render(); }});
+
+    function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }); }
+
+    // initial render
+    render();
+  </script>
+</body>
+</html>
