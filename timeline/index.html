@@ -6,269 +6,84 @@
     <title>Timeline Journey</title>
     <style>
         :root {
-            --bg: #fff5f8;
+            --bg-dark: #0b0f14;
+            --panel: #0f1720;
             --accent: #ff6b9f;
-            --muted: #6b6b6b;
-            --branch: linear-gradient(180deg, #ff9bbf, #ff6b9f);
+            --muted-light: #9aa6b2;
+            --text-light: #e6eef6;
+            --branch: linear-gradient(180deg, rgba(255,107,159,0.14), rgba(255,107,159,0.06));
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0 }
 
         body {
             font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            background: linear-gradient(180deg, #fff 0%, #fff5f8 100%);
-            color: #222;
+            color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 32px 20px;
+            padding: 40px 20px;
+            background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.02), transparent 8%),
+                        linear-gradient(180deg, #071019 0%, #0b0f14 100%);
+            background-color: var(--bg-dark);
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1000px; margin: 0 auto }
 
-        header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
+        header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px }
 
-        h1 {
-            margin: 0;
-            font-size: 28px;
-            color: #222;
-        }
+        h1 { margin: 0; font-size: 30px; color: var(--text-light) }
 
-        .subtitle {
-            color: var(--muted);
-            font-size: 14px;
-        }
+        .subtitle { color: var(--muted-light); font-size: 14px }
 
-        .timeline {
-            position: relative;
-            padding: 40px 0;
-            margin-top: 24px;
-        }
+        .timeline { position: relative; padding: 40px 0; margin-top: 8px }
 
-        /* Main branch line */
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: var(--branch);
-            top: 0;
-            border-radius: 4px;
+            left: 50%; transform: translateX(-50%);
+            width: 6px; height: 100%; background: var(--branch); top: 0; border-radius: 6px;
+            box-shadow: 0 0 30px rgba(255,150,180,0.04);
         }
 
-        .timeline-item {
-            position: relative;
-            width: 50%;
-            padding: 16px 32px;
-            margin-bottom: 40px;
-            box-sizing: border-box;
-        }
+        .timeline-item { position: relative; width: 50%; padding: 18px 32px; margin-bottom: 46px }
+        .timeline-item:nth-child(odd) { left: 0; text-align: right }
+        .timeline-item:nth-child(even) { left: 50%; text-align: left }
 
-        .timeline-item:nth-child(odd) {
-            left: 0;
-            text-align: right;
-        }
+        .timeline-content { display: inline-block; background: rgba(16,22,28,0.6); padding: 16px; border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.6); max-width:520px; transition: transform .25s ease, box-shadow .25s ease; backdrop-filter: blur(6px); }
+        .timeline-content:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.7) }
 
-        .timeline-item:nth-child(even) {
-            left: 50%;
-            text-align: left;
-        }
+        .timeline-date { font-size: 13px; color: var(--muted-light); margin-bottom: 10px }
 
-        .timeline-content {
-            display: inline-block;
-            background: white;
-            padding: 14px;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-            max-width: 420px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        .timeline-row { display:flex; align-items:center; gap:18px }
 
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
+        /* larger, clickable photos */
+        .timeline-photo { width: 180px; height: 180px; border-radius: 14px; overflow:hidden; flex-shrink:0; box-shadow: 0 10px 30px rgba(0,0,0,0.6); cursor: pointer; border: 3px solid rgba(255,255,255,0.04); }
+        .timeline-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .35s ease; }
+        .timeline-photo:hover img { transform: scale(1.06); }
 
-        .timeline-date {
-            font-size: 13px;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
+        .timeline-text { flex: 1 }
+        .timeline-title { font-weight:700; color:var(--text-light); margin-bottom:6px }
+        .timeline-description { color:var(--muted-light); font-size:0.95em; line-height:1.45 }
 
-        .timeline-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .timeline-dot { position:absolute; left:50%; transform:translateX(-50%); width:22px; height:22px; background:var(--accent); border-radius:50%; box-shadow:0 8px 20px rgba(255,107,159,0.14); z-index:10; top:18px }
 
-        .timeline-photo {
-            width: 96px;
-            height: 96px;
-            border-radius: 12px;
-            overflow: hidden;
-            flex-shrink: 0;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-        }
+        .modal { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:1000 }
+        .modal.open { display:flex }
+        .modal-inner { background:#0b1115; color:var(--text-light); padding:22px; border-radius:12px; max-width:92vw; max-height:92vh; overflow:auto }
+        .modal-inner h2 { margin-top:0 }
+        .modal-inner img { max-width:90vw; border-radius:12px; display:block; margin-top:12px }
+        .modal-date { margin-top:8px; color:var(--muted-light); font-size:13px }
+        .modal-description { margin-top:12px; color:var(--muted-light); line-height:1.6 }
 
-        .timeline-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            cursor: pointer;
-        }
-
-        .timeline-text {
-            flex: 1;
-        }
-
-        .timeline-title {
-            font-weight: 600;
-            color: #222;
-            margin-bottom: 4px;
-        }
-
-        .timeline-description {
-            color: var(--muted);
-            font-size: 0.9em;
-            line-height: 1.4;
-        }
-
-        /* Leaf dot */
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 6px 14px rgba(255, 107, 159, 0.28);
-            z-index: 10;
-            top: 16px;
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal.open {
-            display: flex;
-        }
-
-        .modal-inner {
-            background: #fff;
-            padding: 24px;
-            border-radius: 12px;
-            max-width: 92vw;
-            max-height: 92vh;
-            overflow: auto;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .modal-inner h2 {
-            margin-top: 0;
-            color: #222;
-        }
-
-        .modal-inner img {
-            max-width: 100%;
-            border-radius: 12px;
-            margin-top: 12px;
-        }
-
-        .modal-date {
-            margin-top: 8px;
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .modal-description {
-            margin-top: 12px;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* Responsive design */
-        @media (max-width: 720px) {
-            header {
-                gap: 12px;
-                margin-bottom: 24px;
-            }
-
-            header > div:first-child {
-                font-size: 32px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            .subtitle {
-                font-size: 12px;
-            }
-
-            .timeline::before {
-                left: 28px;
-            }
-
-            .timeline-item {
-                width: 100%;
-                left: 0 !important;
-                padding-left: 64px;
-                padding-right: 20px;
-                text-align: left !important;
-            }
-
-            .timeline-dot {
-                left: 28px;
-            }
-
-            .timeline-content {
-                max-width: 100%;
-            }
-
-            .timeline-row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .timeline-photo {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 1;
-            }
+        @media (max-width:720px) {
+            body { padding: 20px }
+            .timeline::before { left:28px }
+            .timeline-item { width:100%; left:0 !important; padding-left:84px; padding-right:20px; text-align:left !important }
+            .timeline-dot { left:28px }
+            .timeline-content { max-width:100% }
+            .timeline-row { flex-direction:column; align-items:flex-start }
+            .timeline-photo { width:100%; height:auto; aspect-ratio: 1; border-radius:12px }
+            .timeline-photo img { transform:none }
         }
     </style>
 </head>
