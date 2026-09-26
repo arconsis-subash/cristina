@@ -2,43 +2,51 @@
   "timeline": [
     {
       "id": 1,
-      "year": "2020",
-      "title": "Project Launch",
-      "description": "Started the journey with an amazing team and innovative ideas.",
+      "date": "2024-11-20",
+      "title": "First WhatsApp chat",
+      "description": "Our first message on WhatsApp — the start of everything.",
       "image": "event1.jpg",
-      "color": "#FF6B6B"
+      "color": "#ff6b9f"
     },
     {
       "id": 2,
-      "year": "2021",
-      "title": "First Milestone",
-      "description": "Reached our first major milestone with 1000+ users joining the platform.",
+      "date": "2024-11-22",
+      "title": "Birthday message",
+      "description": "Subash: 'U know I had birthday today' — first birthday mention.",
       "image": "event2.jpg",
-      "color": "#4ECDC4"
+      "color": "#ffc0cb"
     },
     {
       "id": 3,
-      "year": "2022",
-      "title": "Major Update",
-      "description": "Released a complete redesign with new features and improved performance.",
+      "date": "2024-12-12",
+      "title": "Weihnachtsmarkt (Christmas market)",
+      "description": "Planned Markt visit and festive messages — first holiday season together.",
       "image": "event3.jpg",
-      "color": "#45B7D1"
+      "color": "#ffecf4"
     },
     {
       "id": 4,
-      "year": "2023",
-      "title": "Global Expansion",
-      "description": "Expanded to 10+ countries and reached 100k users worldwide.",
+      "date": "2025-01-04",
+      "title": "First I love you",
+      "description": "Warm 'I love you' messages exchanged — feelings growing.",
       "image": "event4.jpg",
-      "color": "#96CEB4"
+      "color": "#ffd0d8"
     },
     {
       "id": 5,
-      "year": "2024",
-      "title": "Community Growth",
-      "description": "Built a thriving community with active contributors and partnerships.",
+      "date": "2025-08-10",
+      "title": "Our first date",
+      "description": "'But I love it because it's from our first date' — the first date memory (pizza and all).",
       "image": "event5.jpg",
-      "color": "#FFEAA7"
+      "color": "#ffc8d1"
+    },
+    {
+      "id": 6,
+      "date": "2026-06-15",
+      "title": "Best birthday",
+      "description": "'Best ever birthday' — a big celebration with people who love her.",
+      "image": "event6.jpg",
+      "color": "#ffb6c9"
     }
   ]
 }
