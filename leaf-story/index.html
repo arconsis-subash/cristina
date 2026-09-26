@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Leaf Story — Animated Timeline</title>
+  <style>
+    :root{--bg:#071018;--text:#e6eef6;--muted:#9aa6b2;--accent:#ff6b9f}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#041018, #071018);color:var(--text);overflow:auto}
+    .wrap{max-width:1100px;margin:40px auto;padding:24px;position:relative}
+    h1{font-size:28px;margin:6px 0 18px}
+
+    .stage{position:relative;height:80vh;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+
+    /* SVG branch fills left half; leaves will be absolutely positioned on top */
+    .branch-svg{position:absolute;left:6%;top:6%;width:60%;height:88%;pointer-events:none;}
+
+    .leaf{position:absolute;transform-origin:center center;opacity:0;transition:transform .6s cubic-bezier(.2,.9,.3,1),opacity .5s;cursor:pointer}
+    .leaf .thumb{width:120px;height:120px;border-radius:50%;overflow:hidden;border:6px solid rgba(255,255,255,0.06);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+    .leaf .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .leaf .label{margin-top:8px;font-size:14px;color:var(--text);text-align:center;width:140px}
+
+    /* grow animation classes */
+    .grow-1{animation:grow .7s ease forwards .12s}
+    .grow-2{animation:grow .7s ease forwards .18s}
+    .grow-3{animation:grow .7s ease forwards .24s}
+    @keyframes grow{from{transform:translateY(12px) scale(0.4) rotate(-10deg);opacity:0}to{transform:translateY(0) scale(1) rotate(0);opacity:1}}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);z-index:999}
+    .modal.open{display:flex}
+    .modal-inner{background:#071018;padding:18px;border-radius:12px;max-width:92vw;max-height:92vh;overflow:auto;color:var(--text)}
+    .modal-inner img{max-width:84vw;border-radius:10px}
+
+    .help{position:absolute;right:18px;top:18px;color:var(--muted);font-size:13px}
+
+    @media (max-width:720px){.branch-svg{left:2%;width:100%;height:60%}.leaf .thumb{width:86px;height:86px}.leaf .label{width:110px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:40px">🌿</div>
+      <div>
+        <h1>Leaf Story — a growing timeline</h1>
+        <div class="help">Click a leaf to read details. Images loaded from timeline/images/</div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <!-- branch path -->
+      <svg class="branch-svg" viewBox="0 0 600 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#ff9bbf" stop-opacity="0.18"/><stop offset="100%" stop-color="#ff6b9f" stop-opacity="0.06"/></linearGradient>
+        </defs>
+        <path id="branchPath" d="M120,40 C40,140 80,260 120,360 C160,460 120,560 160,660 C200,760 140,860 120,940" stroke="url(#g)" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      <!-- leaves will be injected here -->
+      <div id="leavesContainer"></div>
+    </div>
+
+    <div style="margin-top:14px;color:var(--muted);font-size:13px">This app is isolated in leaf-story/ and uses a copy of the JSON data. Serve with a static server (python -m http.server).</div>
+  </div>
+
+  <div class="modal" id="modal"><div class="modal-inner" id="modalInner"></div></div>
+
+  <script>
+    // Load data and render leaves along the SVG path
+    async function loadData(){
+      try{ const r = await fetch('./data/timeline.json'); return (await r.json()).timeline || []; }catch(e){console.error(e); return []}
+    }
+
+    function formatDate(d){ const dt=new Date(d); if(isNaN(dt)) return d; return dt.toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'});} 
+
+    async function render(){
+      const events = (await loadData()).slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
+      const path = document.getElementById('branchPath');
+      const length = path.getTotalLength();
+      const container = document.getElementById('leavesContainer');
+      container.innerHTML='';
+
+      // place leaves at intervals along the path
+      const step = length / Math.max(6, events.length);
+      events.forEach((ev,i)=>{
+        const point = path.getPointAtLength(Math.min(length-1, (i+0.6)*step));
+        const leaf = document.createElement('div');
+        leaf.className = 'leaf';
+        leaf.style.left = (point.x - 70) + 'px';
+        leaf.style.top = (point.y - 40) + 'px';
+
+        // staggered grow animation
+        leaf.classList.add((i%3===0)?'grow-1':(i%3===1)?'grow-2':'grow-3');
+
+        const thumb = document.createElement('div'); thumb.className='thumb';
+        const img = document.createElement('img');
+        // reference images from existing timeline/images folder to avoid duplicating files
+        img.src = '../timeline/images/' + (ev.image || '');
+        img.alt = ev.title || 'photo';
+        img.onerror = function(){ this.src = 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="${ev.color||'#ffd6e8' }"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="22">No image</text></svg>`); };
+        thumb.appendChild(img);
+
+        const label = document.createElement('div'); label.className='label'; label.textContent = ev.title || '';
+        leaf.appendChild(thumb); leaf.appendChild(label);
+
+        leaf.addEventListener('click', ()=>openModal(ev));
+        container.appendChild(leaf);
+      });
+    }
+
+    const modal = document.getElementById('modal'); const modalInner = document.getElementById('modalInner');
+    function openModal(ev){
+      modalInner.innerHTML = `<h2 style="margin:0 0 6px">${escapeHtml(ev.title||'')}</h2><div style="color:var(--muted);font-size:13px">${formatDate(ev.date)}</div><div style="margin-top:12px"><img src="../timeline/images/${ev.image||''}" onerror="this.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'420\'><rect width=\'100%\' height=\'100%\' fill=\'${ev.color||'#ffd6e8'}\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'#fff\' font-size=\'24\'>No image</text></svg>')" style="max-width:90vw;border-radius:8px" /></div><p style="color:var(--muted);line-height:1.6;margin-top:12px">${escapeHtml(ev.description||'')}</p>`;
+      modal.classList.add('open');
+    }
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+    function escapeHtml(s){ return String(s).replace(/[&<>'"\\]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":"&#39;",'"':'&quot;','\\':'\\\\'})[c]); }
+
+    document.addEventListener('DOMContentLoaded', ()=>render());
+  </script>
+</body>
+</html>

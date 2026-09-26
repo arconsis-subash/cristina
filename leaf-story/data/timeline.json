@@ -1,0 +1,196 @@
+{
+  "timeline": [
+    {
+      "id": 1,
+      "date": "2024-11-20",
+      "title": "First WhatsApp chat",
+      "description": "Our first message on WhatsApp — the start of everything.",
+      "image": "first_message.jpg",
+      "color": "#ffb6c1"
+    },
+    {
+      "id": 2,
+      "date": "2024-11-22",
+      "title": "Birthday message",
+      "description": "Subash: 'U know I had birthday today' — first birthday mention.",
+      "image": "first_birthday.jpg",
+      "color": "#ffc0cb"
+    },
+    {
+      "id": 3,
+      "date": "2024-11-26",
+      "title": "First meeting in Eppingen",
+      "description": "Cristina: 'I am here near the ambulance, incase i fall down when i see you' — we met for the first time! 💕",
+      "image": "meet_at_eppingen.JPG",
+      "color": "#ffd1e6"
+    },
+    {
+      "id": 4,
+      "date": "2024-11-30",
+      "title": "Cristina visits Karlsruhe",
+      "description": "She came to Karlsruhe and visited my room — our first time together at home. 💝",
+      "image": "meet_in_karlsruhe.JPG",
+      "color": "#ffdbe6"
+    },
+    {
+      "id": 5,
+      "date": "2024-12-24",
+      "title": "First Christmas together",
+      "description": "Frist festive season where we got more chance to know each other. 🎄",
+      "image": "christma.png",
+      "color": "#ffecf4"
+    },
+    {
+      "id": 6,
+      "date": "2025-01-01",
+      "title": "I confessed my love",
+      "description": "On New Year's Day, I told her 'I love you' — the moment everything changed. ❤️",
+      "image": "new_year.png",
+      "color": "#ffc8d0"
+    },
+    {
+      "id": 8,
+      "date": "2025-02-14",
+      "title": "Valentine's Day",
+      "description": "Celebrated Valentine's Day together — a day of love and joy. 💖",
+      "image": "first_valentine.png",
+      "color": "#ffb6c1"
+    },
+    {
+      "id": 9,
+      "date": "2025-04-13",
+      "title": "First Gym session together",
+      "description": "Growing stronger together — our first workout session at the gym. 💪",
+      "image": "first_gym.jpg",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 10,
+      "date": "2025-04-20",
+      "title": "First MOMO together",
+      "description": "Enjoyed our first MOMO meal together — a delicious experience. 🥟",
+      "image": "momo.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 11,
+      "date": "2025-05-13",
+      "title": "First vacation to Romania",
+      "description": "Our first trip together to Romania — exploring new places and making memories. 🌍",
+      "image": "first_trip.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 12,
+      "date": "2025-05-15",
+      "title": "Sweet Vacation",
+      "description": "Enjoyed a sweet vacation together — filled with love and laughter. 🌞",
+      "image": "frist_vacation.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 13,
+      "date": "2025-05-26",
+      "title": "First Six Months Anniversary",
+      "description": "Celebrated our first six months together — a milestone in our journey. 💕",
+      "image": "first_six_month.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 14,
+      "date": "2025-06-15",
+      "title": "Best birthday",
+      "description": "'Best ever birthday' — a big celebration with people who love her.",
+      "image": "first_iubi_birthday.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 15,
+      "date": "2025-07-04",
+      "title": "First Company Event together",
+      "description": "Attended our first company event together — a day of fun and bonding. 🎉",
+      "image": "first_company_event.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 16,
+      "date": "2025-07-24",
+      "title": "First Bike Ride together",
+      "description": "Enjoyed our first bike ride together — feeling the wind and freedom. 🚴‍♂️",
+      "image": "first_bike_ride.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 16,
+      "date": "2025-08-09",
+      "title": "Cristina Solo Vacation",
+      "description": "First time we were apart for a vacation — she went solo to Romania, and I missed her a lot. 🌴",
+      "image": "her_solo_vacation.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 17,
+      "date": "2025-08-28",
+      "title": "Driving together",
+      "description": "I pick her up for the first time after getting a driving licence. We drove together for the first time. 🚗",
+      "image": "first_ride.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 18,
+      "date": "2025-09-01",
+      "title": "We moved together",
+      "description": "We moved in together — starting a new chapter of our lives. 🏡",
+      "image": "move_in.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 19,
+      "date": "2025-09-19",
+      "title": "Subash longest vacation in Nepal",
+      "description": "We were apart for longest time. 40 days of separation. I missed her a lot. 😢",
+      "image": "longest_time_apart.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 20,
+      "date": "2025-11-03",
+      "title": "She wore saree for the first time",
+      "description": "She wore saree for the first time — looking beautiful and elegant. 👗",
+      "image": "saree.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 21,
+      "date": "2025-11-22",
+      "title": "My birthday celebration",
+      "description": "Celebrated my birthday together — a day filled with love and surprises. 🎂",
+      "image": "29th_birthday.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 22,
+      "date": "2025-11-29",
+      "title": "Bought our first car",
+      "description": "We bought our first car together — a new adventure on the road. 🚗",
+      "image": "first_car.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 23,
+      "date": "2025-12-25",
+      "title": "First Christmas vacation together",
+      "description": "Celebrated our first Christmas vacation together — a magical time filled with love and joy. 🎄",
+      "image": "christmas.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 25,
+      "date": "2026-01-01",
+      "title": "New Year celebration",
+      "description": "Celebrated New Year together — welcoming the new year with love and happiness. 🎉",
+      "image": "2026.png",
+      "color": "#ffb6c9"
+    }
+  ]
+}
