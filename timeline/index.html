@@ -27,11 +27,11 @@
 
         /* background stack behind content */
         .bg-stack { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-        .bg-stack .bg-item { position: absolute; width: 60vw; height: 60vw; max-width: 900px; max-height: 900px; background-size: cover; background-position: center; filter: blur(18px) saturate(1.05); opacity: 0.10; transform-origin: center; }
-        .bg-stack .bg-item.left { left: -10vw; top: -10vh; transform: rotate(-12deg) translateZ(0); }
-        .bg-stack .bg-item.right { right: -12vw; bottom: -6vh; transform: rotate(14deg) translateZ(0); }
-        .bg-stack .bg-item.center { left: 20vw; top: 20vh; width: 40vw; height: 40vw; opacity: 0.06; filter: blur(28px) saturate(1.02); transform: rotate(-6deg); }
-        .bg-stack .bg-item.overlay { left: 5vw; top: 40vh; width: 50vw; height: 50vw; opacity: 0.05; filter: blur(36px) grayscale(0.06); transform: rotate(8deg); }
+        .bg-stack .bg-item { position: absolute; width: 60vw; height: 60vw; max-width: 900px; max-height: 900px; background-size: cover; background-position: center; filter: blur(8px) saturate(1.02); opacity: 0.16; transform-origin: center; }
+        .bg-stack .bg-item.left { left: -10vw; top: -8vh; transform: rotate(-10deg) translateZ(0); }
+        .bg-stack .bg-item.right { right: -10vw; bottom: -4vh; transform: rotate(12deg) translateZ(0); }
+        .bg-stack .bg-item.center { left: 20vw; top: 18vh; width: 40vw; height: 40vw; opacity: 0.12; filter: blur(12px) saturate(1.02); transform: rotate(-6deg); }
+        .bg-stack .bg-item.overlay { left: 5vw; top: 36vh; width: 50vw; height: 50vw; opacity: 0.10; filter: blur(14px) grayscale(0.03); transform: rotate(6deg); }
 
         .container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 5 }
 
@@ -40,7 +40,9 @@
         .subtitle { color: var(--muted-light); font-size: 14px }
 
         .timeline { position: relative; padding: 40px 0; margin-top: 8px }
-        .timeline::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 6px; height: 100%; background: var(--branch); top: 0; border-radius: 6px; box-shadow: 0 0 30px rgba(255,107,159,0.04); }
+        /* hide straight line, use curved svg instead */
+        .timeline::before { display: none; }
+        .timeline-curve { position: fixed; left: 50%; top: 0; transform: translateX(-50%); width: 160px; height: 100vh; z-index: 2; pointer-events: none; opacity: 0.95 }
 
         .timeline-item { position: relative; width: 50%; padding: 18px 32px; margin-bottom: 46px }
         .timeline-item:nth-child(odd) { left: 0; text-align: right }
@@ -91,6 +93,18 @@
         <div class="bg-item center" style="background-image: url('./images/new_year.png');"></div>
         <div class="bg-item overlay" style="background-image: url('./images/momo.png');"></div>
     </div>
+
+    <!-- Curvy SVG timeline path -->
+    <svg class="timeline-curve" viewBox="0 0 100 1000" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#ff9bbf" stop-opacity="0.5" />
+          <stop offset="100%" stop-color="#ff6b9f" stop-opacity="0.3" />
+        </linearGradient>
+      </defs>
+      <path d="M50,0 C40,120 60,240 50,360 C40,480 60,600 50,720 C40,840 60,1000 50,1100" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
+    </svg>
+
     <div class="container">
         <header>
             <div style="font-size: 48px">💖</div>
