@@ -5,56 +5,80 @@
       "date": "2024-11-20",
       "title": "First WhatsApp chat",
       "description": "Our first message on WhatsApp — the start of everything.",
-      "image": "./images/first_message.jpg",
-      "color": "#ff6b9f"
+      "image": "first_message.jpg",
+      "color": "#ffb6c1"
     },
     {
       "id": 2,
       "date": "2024-11-22",
       "title": "Birthday message",
       "description": "Subash: 'U know I had birthday today' — first birthday mention.",
-      "image": "images/first_birthday.jpg",
+      "image": "first_birthday.jpg",
       "color": "#ffc0cb"
     },
     {
       "id": 3,
       "date": "2024-11-26",
-      "title": "First Date in Eppingen",
-      "description": "Cristina's cheesy line: I am here near the ambulance, incase i fall down when i see you",
-      "image": "images/meet_at_eppingen.jpg",
-      "color": "#ffecf4"
+      "title": "First meeting in Eppingen",
+      "description": "Cristina: 'I am here near the ambulance, incase i fall down when i see you' — we met for the first time! 💕",
+      "image": "meet_at_eppingen.JPG",
+      "color": "#ffd1e6"
     },
     {
       "id": 4,
-      "date": "2024-12-1",
-      "title": "Weihnachtsmarkt (Christmas market)",
-      "description": "Planned Markt visit and festive messages — first holiday season together.",
-      "image": "event3.jpg",
-      "color": "#ffecf4"
+      "date": "2024-11-30",
+      "title": "Cristina visits Karlsruhe",
+      "description": "She came to Karlsruhe and visited my room — our first time together at home. 💝",
+      "image": null,
+      "color": "#ffdbe6"
     },
     {
       "id": 5,
-      "date": "2025-01-04",
-      "title": "First I love you",
-      "description": "Warm 'I love you' messages exchanged — feelings growing.",
-      "image": "event4.jpg",
-      "color": "#ffd0d8"
+      "date": "2024-12-12",
+      "title": "Weihnachtsmarkt (Christmas market)",
+      "description": "Planned Markt visit and festive messages — first holiday season together.",
+      "image": null,
+      "color": "#ffecf4"
     },
     {
       "id": 6,
-      "date": "2025-02-14",
-      "title": "Valentine's Day",
-      "description": "Special Valentine's messages and plans — celebrating love.",
-      "image": "event5.jpg",
-      "color": "#ffb6c1"
+      "date": "2025-01-01",
+      "title": "I confessed my love",
+      "description": "On New Year's Day, I told her 'I love you' — the moment everything changed. ❤️",
+      "image": null,
+      "color": "#ffc8d0"
     },
     {
       "id": 7,
-      "date": "2025-03-01",
-      "title": "First trip together",
-      "description": "Our first trip together — unforgettable memories made.",
-      "image": "event6.jpg",
-      "color": "#ff8da1"
+      "date": "2025-01-04",
+      "title": "First I love you",
+      "description": "Warm 'I love you' messages exchanged — feelings growing.",
+      "image": null,
+      "color": "#ffd0d8"
+    },
+    {
+      "id": 8,
+      "date": "2025-02-10",
+      "title": "Arrival & visit",
+      "description": "'I arrived finally' — visits begin, hugs soon.",
+      "image": null,
+      "color": "#ffe3ea"
+    },
+    {
+      "id": 9,
+      "date": "2025-08-10",
+      "title": "Our first date",
+      "description": "'But I love it because it's from our first date' — the first date memory (pizza and all).",
+      "image": null,
+      "color": "#ffc8d1"
+    },
+    {
+      "id": 10,
+      "date": "2026-06-15",
+      "title": "Best birthday",
+      "description": "'Best ever birthday' — a big celebration with people who love her.",
+      "image": null,
+      "color": "#ffb6c9"
     }
   ]
 }
