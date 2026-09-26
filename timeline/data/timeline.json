@@ -5,7 +5,7 @@
       "date": "2024-11-20",
       "title": "First WhatsApp chat",
       "description": "Our first message on WhatsApp — the start of everything.",
-      "image": "event1.jpg",
+      "image": "./images/first_message.jpg",
       "color": "#ff6b9f"
     },
     {
@@ -13,19 +13,27 @@
       "date": "2024-11-22",
       "title": "Birthday message",
       "description": "Subash: 'U know I had birthday today' — first birthday mention.",
-      "image": "event2.jpg",
+      "image": "images/first_birthday.jpg",
       "color": "#ffc0cb"
     },
     {
       "id": 3,
-      "date": "2024-12-12",
+      "date": "2024-11-26",
+      "title": "First Date in Eppingen",
+      "description": "Cristina's cheesy line: I am here near the ambulance, incase i fall down when i see you",
+      "image": "images/meet_at_eppingen.jpg",
+      "color": "#ffecf4"
+    },
+    {
+      "id": 4,
+      "date": "2024-12-1",
       "title": "Weihnachtsmarkt (Christmas market)",
       "description": "Planned Markt visit and festive messages — first holiday season together.",
       "image": "event3.jpg",
       "color": "#ffecf4"
     },
     {
-      "id": 4,
+      "id": 5,
       "date": "2025-01-04",
       "title": "First I love you",
       "description": "Warm 'I love you' messages exchanged — feelings growing.",
@@ -33,20 +41,20 @@
       "color": "#ffd0d8"
     },
     {
-      "id": 5,
-      "date": "2025-08-10",
-      "title": "Our first date",
-      "description": "'But I love it because it's from our first date' — the first date memory (pizza and all).",
+      "id": 6,
+      "date": "2025-02-14",
+      "title": "Valentine's Day",
+      "description": "Special Valentine's messages and plans — celebrating love.",
       "image": "event5.jpg",
-      "color": "#ffc8d1"
+      "color": "#ffb6c1"
     },
     {
-      "id": 6,
-      "date": "2026-06-15",
-      "title": "Best birthday",
-      "description": "'Best ever birthday' — a big celebration with people who love her.",
+      "id": 7,
+      "date": "2025-03-01",
+      "title": "First trip together",
+      "description": "Our first trip together — unforgettable memories made.",
       "image": "event6.jpg",
-      "color": "#ffb6c9"
+      "color": "#ff8da1"
     }
   ]
 }
