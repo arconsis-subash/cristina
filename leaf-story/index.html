@@ -11,10 +11,10 @@
     .wrap{max-width:1100px;margin:40px auto;padding:24px;position:relative}
     h1{font-size:28px;margin:6px 0 18px}
 
-    .stage{position:relative;height:80vh;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+    .stage{position:relative;min-height:80vh;height:auto;border-radius:18px;overflow:auto;padding:28px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:0 10px 40px rgba(0,0,0,0.6)}
 
-    /* SVG branch fills left half; leaves will be absolutely positioned on top */
-    .branch-svg{position:absolute;left:6%;top:6%;width:60%;height:88%;pointer-events:none;}
+    /* SVG branch fills left half; leaves will be absolutely positioned on top. Stage is scrollable. */
+    .branch-svg{position:absolute;left:6%;top:0;width:60%;height:auto;pointer-events:none;}
 
     .leaf{position:absolute;transform-origin:center center;opacity:0;transition:transform .6s cubic-bezier(.2,.9,.3,1),opacity .5s;cursor:pointer}
     .leaf .thumb{width:120px;height:120px;border-radius:50%;overflow:hidden;border:6px solid rgba(255,255,255,0.06);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
@@ -76,9 +76,19 @@
 
     async function render(){
       const events = (await loadData()).slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
+      const container = document.getElementById('leavesContainer');
+      const svg = document.querySelector('.branch-svg');
+
+      // make stage scrollable by sizing the virtual canvas based on number of events
+      const desiredHeight = Math.max(1200, events.length * 160);
+      container.style.position = 'relative';
+      container.style.height = desiredHeight + 'px';
+      svg.style.height = desiredHeight + 'px';
+
+      // now we can query the path with correct length
       const path = document.getElementById('branchPath');
       const length = path.getTotalLength();
-      const container = document.getElementById('leavesContainer');
+
       container.innerHTML='';
 
       // place leaves at intervals along the path
@@ -88,7 +98,7 @@
         const leaf = document.createElement('div');
         leaf.className = 'leaf';
         leaf.style.left = (point.x - 70) + 'px';
-        leaf.style.top = (point.y - 40) + 'px';
+        leaf.style.top = (point.y - 60) + 'px';
 
         // staggered grow animation
         leaf.classList.add((i%3===0)?'grow-1':(i%3===1)?'grow-2':'grow-3');
@@ -107,6 +117,9 @@
         leaf.addEventListener('click', ()=>openModal(ev));
         container.appendChild(leaf);
       });
+
+      // ensure stage starts at top
+      document.getElementById('stage').scrollTop = 0;
     }
 
     const modal = document.getElementById('modal'); const modalInner = document.getElementById('modalInner');
