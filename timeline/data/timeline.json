@@ -1,0 +1,44 @@
+{
+  "timeline": [
+    {
+      "id": 1,
+      "year": "2020",
+      "title": "Project Launch",
+      "description": "Started the journey with an amazing team and innovative ideas.",
+      "image": "event1.jpg",
+      "color": "#FF6B6B"
+    },
+    {
+      "id": 2,
+      "year": "2021",
+      "title": "First Milestone",
+      "description": "Reached our first major milestone with 1000+ users joining the platform.",
+      "image": "event2.jpg",
+      "color": "#4ECDC4"
+    },
+    {
+      "id": 3,
+      "year": "2022",
+      "title": "Major Update",
+      "description": "Released a complete redesign with new features and improved performance.",
+      "image": "event3.jpg",
+      "color": "#45B7D1"
+    },
+    {
+      "id": 4,
+      "year": "2023",
+      "title": "Global Expansion",
+      "description": "Expanded to 10+ countries and reached 100k users worldwide.",
+      "image": "event4.jpg",
+      "color": "#96CEB4"
+    },
+    {
+      "id": 5,
+      "year": "2024",
+      "title": "Community Growth",
+      "description": "Built a thriving community with active contributors and partnerships.",
+      "image": "event5.jpg",
+      "color": "#FFEAA7"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Main branch line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
+            top: 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            text-align: right;
+            padding-right: 52%;
+        }
+
+        .timeline-item:nth-child(even) {
+            text-align: left;
+            padding-left: 52%;
+        }
+
+        /* Leaf node (circle) */
+        .timeline-dot {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            background: white;
+            border: 4px solid #2ecc71;
+            z-index: 10;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
+        }
+
+        .leaf-shape {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            left: 50%;
+            top: 10px;
+            transform: translateX(-50%);
+            z-index: 11;
+        }
+
+        .leaf {
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            border-radius: 50% 0 50% 50%;
+            animation: sway 3s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        .timeline-item:nth-child(odd) .leaf {
+            transform: rotate(-45deg);
+        }
+
+        .timeline-item:nth-child(even) .leaf {
+            transform: rotate(135deg);
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .timeline-year {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timeline-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .timeline-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .color-accent {
+            width: 4px;
+            height: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 2px;
+        }
+
+        .timeline-item:nth-child(even) .color-accent {
+            left: auto;
+            right: 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                text-align: left;
+                padding-left: 80px;
+                padding-right: 0;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .leaf-shape {
+                left: 20px;
+            }
+
+            .color-accent {
+                left: auto;
+                right: auto;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 Our Journey Timeline 🍃</h1>
+        <div class="timeline" id="timeline"></div>
+    </div>
+
+    <script>
+        // Load timeline data from JSON
+        async function loadTimeline() {
+            try {
+                const response = await fetch('./data/timeline.json');
+                const data = await response.json();
+                renderTimeline(data.timeline);
+            } catch (error) {
+                console.error('Error loading timeline:', error);
+                document.getElementById('timeline').innerHTML = 
+                    '<p style="text-align: center; color: white;">Error loading timeline data</p>';
+            }
+        }
+
+        function renderTimeline(timelineData) {
+            const timelineContainer = document.getElementById('timeline');
+            
+            timelineData.forEach((item) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                
+                const colorAccent = document.createElement('div');
+                colorAccent.className = 'color-accent';
+                colorAccent.style.backgroundColor = item.color;
+                
+                const timelineContent = document.createElement('div');
+                timelineContent.className = 'timeline-content';
+                
+                timelineContent.innerHTML = `
+                    <div class="timeline-year">${item.year}</div>
+                    <div class="timeline-title">${item.title}</div>
+                    <div class="timeline-description">${item.description}</div>
+                    <div class="timeline-image">
+                        <img src="./images/${item.image}" alt="${item.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span>Image: ${item.image}</span>'">
+                    </div>
+                `;
+                
+                const timelineDot = document.createElement('div');
+                timelineDot.className = 'timeline-dot';
+                
+                const leafShape = document.createElement('div');
+                leafShape.className = 'leaf-shape';
+                leafShape.innerHTML = `<div class="leaf" style="color: ${item.color}"></div>`;
+                
+                timelineItem.appendChild(colorAccent);
+                timelineItem.appendChild(timelineDot);
+                timelineItem.appendChild(leafShape);
+                timelineItem.appendChild(timelineContent);
+                
+                timelineContainer.appendChild(timelineItem);
+            });
+        }
+
+        // Load timeline when page loads
+        document.addEventListener('DOMContentLoaded', loadTimeline);
+    </script>
+</body>
+</html>
