@@ -113,17 +113,6 @@
             </div>
         </header>
 
-        <!-- Background music player (user-initiated, low default volume) -->
-        <div id="audioPlayer" style="margin-bottom:18px; display:flex; align-items:center; gap:12px; z-index:6">
-            <button id="playBtn" aria-label="Play background music" style="background:var(--accent); color:#071018; border:none; padding:8px 12px; border-radius:8px; cursor:pointer">Play music</button>
-            <label style="display:flex;align-items:center;gap:8px;color:var(--muted-light); font-size:13px">
-                <input id="vol" type="range" min="0" max="1" step="0.01" value="0.12" />
-                Volume
-            </label>
-            <div style="font-size:12px;color:var(--muted-light)">Music: "Romantic" by Bensound (free with attribution)</div>
-        </div>
-        <audio id="bgAudio" src="./assets/romantic.mp3" loop preload="none"></audio>
-
         <section class="timeline" id="timeline"></section>
     </div>
 
@@ -251,37 +240,6 @@
         modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.classList.remove('open'); });
 
         function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
-
-        // Background audio controls
-        (function(){
-            const audio = document.getElementById('bgAudio');
-            const playBtn = document.getElementById('playBtn');
-            const vol = document.getElementById('vol');
-
-            const savedEnabled = localStorage.getItem('cristina_bg_audio_enabled') === '1';
-            const savedVol = parseFloat(localStorage.getItem('cristina_bg_audio_volume') || '0.12');
-
-            audio.volume = isNaN(savedVol) ? 0.12 : savedVol;
-            vol.value = audio.volume;
-
-            function updatePlayButton(){ playBtn.textContent = audio.paused ? 'Play music' : 'Pause music'; }
-
-            playBtn.addEventListener('click', async ()=>{
-                if(audio.paused){
-                    try{ await audio.play(); localStorage.setItem('cristina_bg_audio_enabled','1'); }catch(e){ console.warn('Audio play prevented:', e); }
-                } else { audio.pause(); localStorage.setItem('cristina_bg_audio_enabled','0'); }
-                updatePlayButton();
-            });
-
-            vol.addEventListener('input', ()=>{
-                const v = parseFloat(vol.value);
-                audio.volume = isNaN(v) ? 0.12 : v;
-                localStorage.setItem('cristina_bg_audio_volume', audio.volume);
-            });
-
-            // Auto-start only if user previously enabled
-            if(savedEnabled){ audio.play().then(updatePlayButton).catch(()=>updatePlayButton()); } else { updatePlayButton(); }
-        })();
 
         // Initial render when page loads
         document.addEventListener('DOMContentLoaded', render);
