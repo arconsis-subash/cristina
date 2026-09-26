@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Journey</title>
+    <style>
+        :root {
+            --bg: #fff5f8;
+            --accent: #ff6b9f;
+            --muted: #6b6b6b;
+            --branch: linear-gradient(180deg, #ff9bbf, #ff6b9f);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg, #fff 0%, #fff5f8 100%);
+            color: #222;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 32px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #222;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+            margin-top: 24px;
+        }
+
+        /* Main branch line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--branch);
+            top: 0;
+            border-radius: 4px;
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 16px 32px;
+            margin-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            display: inline-block;
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            max-width: 420px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timeline-photo {
+            width: 96px;
+            height: 96px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .timeline-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .timeline-text {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 4px;
+        }
+
+        .timeline-description {
+            color: var(--muted);
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* Leaf dot */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 6px 14px rgba(255, 107, 159, 0.28);
+            z-index: 10;
+            top: 16px;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-inner {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 92vw;
+            max-height: 92vh;
+            overflow: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-inner h2 {
+            margin-top: 0;
+            color: #222;
+        }
+
+        .modal-inner img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-top: 12px;
+        }
+
+        .modal-date {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .modal-description {
+            margin-top: 12px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Responsive design */
+        @media (max-width: 720px) {
+            header {
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            header > div:first-child {
+                font-size: 32px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .timeline::before {
+                left: 28px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 64px;
+                padding-right: 20px;
+                text-align: left !important;
+            }
+
+            .timeline-dot {
+                left: 28px;
+            }
+
+            .timeline-content {
+                max-width: 100%;
+            }
+
+            .timeline-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-photo {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style="font-size: 48px">💖</div>
+            <div>
+                <h1>Cristina & Subash — Our Timeline <span style="color: var(--accent)">♥</span></h1>
+                <div class="subtitle">A little interactive memory lane — add photos, relive moments.</div>
+            </div>
+        </header>
+
+        <section class="timeline" id="timeline"></section>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-inner" id="modalInner"></div>
+    </div>
+
+    <script>
+        // Load timeline from JSON file
+        async function loadTimelineFromJSON() {
+            try {
+                const response = await fetch('./data/timeline.json');
+                const data = await response.json();
+                return data.timeline;
+            } catch (error) {
+                console.error('Error loading timeline from JSON:', error);
+                return [];
+            }
+        }
+
+        function loadEvents(){
+            try{
+                const raw = localStorage.getItem('cristina_timeline_events');
+                if(raw) return JSON.parse(raw);
+            }catch(e){console.warn(e)}
+            return [];
+        }
+
+        function formatDate(d){
+            const dt = new Date(d);
+            if(isNaN(dt)) return d;
+            return dt.toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'});
+        }
+
+        const timeline = document.getElementById('timeline');
+        async function render(){
+            // Load from JSON as primary source
+            let events = await loadTimelineFromJSON();
+            
+            // If no JSON events, try localStorage
+            if(events.length === 0) {
+                events = loadEvents();
+            }
+            
+            // Sort by date
+            events = events.slice().sort((a,b)=> new Date(a.date) - new Date(b.date));
+            
+            timeline.querySelectorAll('.timeline-item').forEach(n=>n.remove());
+            events.forEach((ev,i)=>{
+                const el = document.createElement('div'); 
+                el.className = 'timeline-item';
+                
+                const content = document.createElement('div'); 
+                content.className='timeline-content';
+                
+                const date = document.createElement('div'); 
+                date.className='timeline-date'; 
+                date.textContent = formatDate(ev.date);
+                
+                const row = document.createElement('div'); 
+                row.className='timeline-row';
+                
+                const photoWrap = document.createElement('div'); 
+                photoWrap.className='timeline-photo';
+                const img = document.createElement('img'); 
+                
+                // Construct proper image path
+                if(ev.image) {
+                    img.src = './images/' + ev.image;
+                } else {
+                    img.src = placeholderSVG(ev.color || '#ffd6e8');
+                }
+                
+                img.alt = ev.title || 'photo';
+                img.onerror = function() {
+                    // If image fails to load, use placeholder
+                    this.src = placeholderSVG(ev.color || '#ffd6e8');
+                };
+                img.addEventListener('click', ()=> openModal(ev));
+                photoWrap.appendChild(img);
+                
+                const txt = document.createElement('div'); 
+                txt.className='timeline-text';
+                const h = document.createElement('div'); 
+                h.className='timeline-title';
+                h.textContent = ev.title || '';
+                const p = document.createElement('p'); 
+                p.className='timeline-description';
+                p.textContent = ev.description || '';
+                txt.appendChild(h); 
+                txt.appendChild(p);
+                
+                if(i%2===0){ 
+                    row.appendChild(txt); 
+                    row.appendChild(photoWrap);
+                } else { 
+                    row.appendChild(photoWrap); 
+                    row.appendChild(txt);
+                }        
+                
+                content.appendChild(date); 
+                content.appendChild(row);
+                el.appendChild(content);
+                
+                const dot = document.createElement('div'); 
+                dot.className='timeline-dot'; 
+                el.appendChild(dot);
+                
+                timeline.appendChild(el);
+            });
+        }
+
+        function placeholderSVG(color){
+            const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='${color}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='36' fill='#fff'>Your photo here</text></svg>`;
+            return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+        }
+
+        const modal = document.getElementById('modal');
+        const modalInner = document.getElementById('modalInner');
+        function openModal(ev){
+            let imgSrc = ev.image ? './images/' + ev.image : placeholderSVG(ev.color || '#ffd6e8');
+            modalInner.innerHTML = `<h2>${escapeHtml(ev.title||'')}</h2><div class="modal-date">${formatDate(ev.date)}</div><div style='margin-top:12px'><img src='${imgSrc}' style='max-width:100%;border-radius:12px' onerror="this.src='${placeholderSVG(ev.color || '#ffd6e8')}'" /></div><p class="modal-description">${escapeHtml(ev.description||'')}</p>`;
+            modal.classList.add('open');
+        }
+        modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+        function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+
+        // Initial render when page loads
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
