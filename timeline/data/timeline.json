@@ -29,15 +29,15 @@
       "date": "2024-11-30",
       "title": "Cristina visits Karlsruhe",
       "description": "She came to Karlsruhe and visited my room — our first time together at home. 💝",
-      "image": null,
+      "image": "meet_in_karlsruhe.JPG",
       "color": "#ffdbe6"
     },
     {
       "id": 5,
-      "date": "2024-12-12",
-      "title": "Weihnachtsmarkt (Christmas market)",
-      "description": "Planned Markt visit and festive messages — first holiday season together.",
-      "image": null,
+      "date": "2024-12-24",
+      "title": "First Christmas together",
+      "description": "Frist festive season where we got more chance to know each other. 🎄",
+      "image": "christma.png",
       "color": "#ffecf4"
     },
     {
@@ -45,39 +45,63 @@
       "date": "2025-01-01",
       "title": "I confessed my love",
       "description": "On New Year's Day, I told her 'I love you' — the moment everything changed. ❤️",
-      "image": null,
+      "image": "new_year.png",
       "color": "#ffc8d0"
     },
     {
-      "id": 7,
-      "date": "2025-01-04",
-      "title": "First I love you",
-      "description": "Warm 'I love you' messages exchanged — feelings growing.",
-      "image": null,
-      "color": "#ffd0d8"
-    },
-    {
       "id": 8,
-      "date": "2025-02-10",
-      "title": "Arrival & visit",
-      "description": "'I arrived finally' — visits begin, hugs soon.",
-      "image": null,
-      "color": "#ffe3ea"
+      "date": "2025-02-14",
+      "title": "Valentine's Day",
+      "description": "Celebrated Valentine's Day together — a day of love and joy. 💖",
+      "image": "first_valentine.png",
+      "color": "#ffb6c1"
     },
     {
       "id": 9,
-      "date": "2025-08-10",
-      "title": "Our first date",
-      "description": "'But I love it because it's from our first date' — the first date memory (pizza and all).",
+      "date": "2026-04-13",
+      "title": "First Gym session together",
+      "description": "Growing stronger together — our first workout session at the gym. 💪",
       "image": null,
-      "color": "#ffc8d1"
+      "color": "#ffb6c9"
     },
     {
       "id": 10,
+      "date": "2026-04-20",
+      "title": "First MOMO together",
+      "description": "Enjoyed our first MOMO meal together — a delicious experience. 🥟",
+      "image": "momo.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 11,
+      "date": "2026-05-13",
+      "title": "First vacation to Romania",
+      "description": "Our first trip together to Romania — exploring new places and making memories. 🌍",
+      "image": "first_trip.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 12,
+      "date": "2026-05-15",
+      "title": "Sweet Vacation",
+      "description": "Enjoyed a sweet vacation together — filled with love and laughter. 🌞",
+      "image": "first_vacation.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 12,
+      "date": "2026-05-26",
+      "title": "First Six Months Anniversary",
+      "description": "Celebrated our first six months together — a milestone in our journey. 💕",
+      "image": "first_six_month.png",
+      "color": "#ffb6c9"
+    },
+    {
+      "id": 9,
       "date": "2026-06-15",
       "title": "Best birthday",
       "description": "'Best ever birthday' — a big celebration with people who love her.",
-      "image": null,
+      "image": "first_iubi_birthday.png",
       "color": "#ffb6c9"
     }
   ]
